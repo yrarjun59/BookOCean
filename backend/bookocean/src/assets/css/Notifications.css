@@ -1,0 +1,29 @@
+.notification-container {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.notification-modal{
+    position: absolute;
+}
+
+.notification-item {
+  padding: 10px; 
+  border-bottom: 1px solid #e6e6e6; 
+
+.notification-image img {
+  width: 40px; /* Set the width of the recipient image */
+  height: 40px; /* Set the height of the recipient image */
+  object-fit: cover; /* Ensure the image fills the container */
+  border-radius: 50%; /* Apply a circular border to the image */
+}
+
+.notification-message {
+  font-weight: bold; 
+}
+
+.notification-time {
+  color: #999999; 
+  font-size: 0.8rem; 
+}

@@ -1,0 +1,27 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore build output
+bookocean/dist/
+
+# Ignore migrations
+base/__pycache__
+base/migrations
+
+users/__pycache__
+users/migrations
+
+# Ignore environment-specific files
+.env
+.env.local
+.env.*.local
+
+# Ignore log files
+*.log
+
+# Ignore editor and IDE specific files
+.vscode/
+.idea/
+*.iml
+today.txt
+db.sqlite3

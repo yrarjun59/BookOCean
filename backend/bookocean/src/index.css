@@ -1,0 +1,402 @@
+:root {
+  --primary-color: #2cd680;
+  --secondary-color: #ff7a5c;
+  --text-color: #03314b;
+  --moto-color: #d90077;
+}
+
+main {
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
+
+h2 {
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+}
+
+h3 {
+  padding: 1rem 0;
+}
+
+.rating span {
+  margin: 0.1rem;
+}
+
+.m-100 {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+/* carousel */
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+}
+.carousel-caption {
+  position: absolute;
+  top: 0;
+}
+
+.carousel-caption h4 {
+  color: #fff;
+}
+
+.carousel img {
+  display: block;
+  height: 300px;
+  padding: 30px;
+  margin: 40px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.carousel a {
+  margin: 0 auto;
+}
+@media (max-width: 900px) {
+  .carousel-caption h2 {
+    font-size: 2.5vw;
+  }
+}
+
+.logo {
+  cursor: pointer;
+  margin-right: 40px;
+}
+
+.cart-icon {
+  color: var(--primary-color);
+  font-size: 30px;
+}
+
+.bell-icon {
+  color: var(--text-color);
+  font-size: 30px;
+}
+
+.notification-number {
+  position: absolute;
+  font-size: 20px;
+  color: var(--moto-color);
+  top: 0;
+  right: 10;
+  text-align: center;
+}
+
+.cartItems {
+  position: absolute;
+  font-size: 20px;
+  color: var(--secondary-color);
+  font-weight: bolder;
+  top: 0;
+  right: 10;
+  text-align: center;
+}
+
+.cartNav {
+  position: relative;
+  margin-left: 30px;
+}
+
+.bellNav {
+  position: relative;
+  margin-left: 30px;
+}
+
+.user-login {
+  font-size: 25px;
+  color: var(--primary-color);
+}
+
+.edit-button {
+  color: var(--primary-color);
+  font-size: 30px;
+  text-align: center;
+  margin-left: 120px;
+}
+
+.profile-img {
+  border-radius: 50%;
+  margin-left: 40px;
+  margin-top: 10px;
+}
+
+.card-field {
+  margin-left: 30px;
+  margin-top: 10px;
+}
+
+.moto-text {
+  color: var(--moto-color);
+  font-weight: bolder;
+  text-transform: capitalize;
+  text-align: center;
+  margin-top: 10px;
+  font-family: Cera, sans-serif;
+}
+
+.page-link {
+  border: none;
+  border: 2px solid var(--primary-color);
+}
+
+.page.item > active {
+  background: red;
+}
+
+.checkout-button {
+  background-color: var(--secondary-color);
+  text-transform: capitalize;
+  width: 100%;
+  margin-top: "10px";
+}
+
+.book-name {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.cart-order-summry {
+  color: var(--text-color);
+  text-transform: capitalize;
+  text-align: center;
+  font-size: 30px;
+  margin-top: 10px;
+}
+
+.total-price {
+  font-weight: bolder;
+  color: var(--text-color);
+}
+.nav {
+  display: flex;
+}
+
+.checkout-steps nav {
+  display: flex;
+}
+
+.active-step {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+}
+
+.inactive-step {
+  background-color: lightgray;
+  color: gray;
+  padding: 10px;
+  border-radius: 0 5px 5px 0;
+  opacity: 0.5;
+}
+
+.current-active-link {
+  text-decoration: underline;
+  background-color: var(--secondary-color);
+}
+
+.payment-button {
+  margin-top: 20px;
+}
+
+.search-list,
+.input-group {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.input-group-i {
+  display: flex;
+  /* flex-direction: column; */
+  /* margin-bottom: 10px; */
+  align-items: center;
+}
+
+.select-input {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+
+  width: 100%;
+  height: 40px;
+  padding: 6px 12px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border-radius: 5px;
+}
+
+.select-input:focus,
+.select-input-image {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.select-input-image {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+
+  width: 80%;
+  height: 40px;
+  padding: 6px 12px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
+.select {
+  width: 100%;
+  margin-right: 30px;
+  font-size: 18px;
+}
+
+.icon {
+  margin-top: 5px;
+  padding: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.button {
+  border: none;
+  background-color: var(--moto-color);
+  color: white;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.image-text {
+  text-decoration: unset;
+  font-size: 15px;
+  color: var(--text-color);
+  padding-top: 20px;
+  margin-left: 5px;
+}
+
+.mx-100 {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.cart-price {
+  font-weight: 1200;
+  color: var(--secondary-color);
+  font-size: 15px;
+}
+
+.qty {
+  color: var(--text-color);
+  opacity: 0.9;
+  font-weight: bolder;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.book-title {
+  color: var(--text-color);
+  font-size: 15px;
+  font-weight: bolder;
+  text-decoration: none;
+  text-transform: capitalize;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ml-left {
+  margin-left: 180px;
+}
+
+.total-price {
+  color: var(--secondary-color);
+  font-weight: bold;
+}
+
+.order-summary {
+  background-color: var(--moto-color);
+  color: white;
+}
+
+.btn-deliver,
+.btn-paid,
+.btn-deliver:hover,
+.btn-paid:hover {
+  width: 100%;
+  color: white;
+  background-color: var(--secondary-color);
+}
+
+.payment-options {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 5px solid black;
+}
+
+.payment-icon {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.payment-icon-cash {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.btn-order-place,
+.btn-order-place:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.price-text {
+  color: var(--moto-color);
+  font-weight: bolder;
+  font-size: larger;
+}
+
+.modal-content {
+  width: 600px;
+  border-radius: 20px;
+}
+
+.modal-dialog {
+  margin: 0;
+  position: absolute;
+  left: 20%;
+  top: 10%;
+  bottom: 10%;
+  transform: translate(-50%, -50%);
+}
