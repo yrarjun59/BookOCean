@@ -47,7 +47,6 @@ function BookCreateScreen() {
       toast.error("Please fill in all required fields.");
       return;
     }
-
     dispatch(
       createBook({
         name,
@@ -59,7 +58,6 @@ function BookCreateScreen() {
         countInStock,
       })
     )
-
     if(bookCreateSuccess){
       navigate("/")
     }
