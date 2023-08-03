@@ -36,6 +36,9 @@ import {
   NOTIFICATION_REQUEST,
   NOTIFICATION_SUCCESS,
   NOTIFICATION_FAIL,
+  MARK_NOTIFICATION_SUCCESS,
+  MARK_NOTIFICATION_FAIL,
+  MARK_NOTIFICATION_REQUEST
 } from "../constants/bookConstants";
 
 export const listBooks =
@@ -127,6 +130,8 @@ export const requestBook = (bookData) => async (dispatch, getState) => {
       type: BOOK_REQUEST_SUCCESS,
       payload: data,
     });
+    dispatch(getnotificationList())
+
   } catch (error) {
     dispatch({
       type: BOOK_REQUEST_FAIL,
@@ -138,7 +143,7 @@ export const requestBook = (bookData) => async (dispatch, getState) => {
   }
 };
 
-export const notificationList = () => async (dispatch, getState) => {
+export const getnotificationList = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: NOTIFICATION_REQUEST,
@@ -174,6 +179,44 @@ export const notificationList = () => async (dispatch, getState) => {
     });
   }
 };
+
+export const markNotfications = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: MARK_NOTIFICATION_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `http://127.0.0.1:8000/api/books/markAsRead/`,
+      config
+    );
+
+    dispatch({
+      type: MARK_NOTIFICATION_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: MARK_NOTIFICATION_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 
 export const myRequestBooks = () => async (dispatch, getState) => {
   try {

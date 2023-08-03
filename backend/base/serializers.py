@@ -8,8 +8,7 @@ from .models import (
     Review,
     ShippingAddress,
     BookRequest,
-    # Notification,
-    # UserNotification,
+    Notify
 )
 from users.models import User, Profile
 from users.serializers import *
@@ -107,29 +106,18 @@ class OrderSerializer(serializers.ModelSerializer):
         return serializer.data
 
 
-# class NotificationSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Notification
-#         fields = "__all__"
+class NotifiySerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField(read_only=True)
+    time_ago = serializers.SerializerMethodField(read_only=True)
 
+    class Meta:
+        model = Notify
+        fields = "__all__"
 
-# class UserNotificationSerializer(serializers.ModelSerializer):
-#     user = serializers.SerializerMethodField(read_only=True)
-#     time_ago = serializers.SerializerMethodField(read_only=True)
-#     is_read = serializers.SerializerMethodField(read_only=True)
-#     notificationMessage = serializers.CharField(source="notificationMessage.message")
-
-#     class Meta:
-#         model = UserNotification
-#         fields = "__all__"
-
-#     def get_user(self, obj):
-#         user = obj.user
-#         serializer = UserSerializer(user, many=False)
-#         return serializer.data
-
-#     def get_is_read(self, obj):
-#         return obj.is_read
-
-#     def get_time_ago(self, obj):
-#         return obj.created_at_display
+    def get_user(self, obj):
+        user = obj.user
+        serializer = UserSerializer(user, many=False)
+        return serializer.data
+    
+    def get_time_ago(self,obj):
+        return obj.created_at

@@ -6,22 +6,12 @@ import { logout } from "../actions/userActions";
 import SearchBox from "./SearchBox";
 import { Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { notificationList } from "../actions/bookActions";
 import NotificationModal from "./NotificationList";
+import { getnotificationList } from "../actions/bookActions";
 
-function Header() {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
-
-  const notification = useSelector((state) => state.notifications);
-  const { notifications } = notification;
-
+function useAutoLogout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const logoutTimerRef = useRef(null);
 
   const logoutHandler = () => {
@@ -31,7 +21,7 @@ function Header() {
   };
 
   const handleUserActivity = () => {
-    clearTimeout(logoutTimerRef.current); 
+    clearTimeout(logoutTimerRef.current);
     logoutTimerRef.current = setTimeout(logoutHandler, 5 * 60 * 1000); // logout automatically after 5 minutes
   };
 
@@ -51,15 +41,37 @@ function Header() {
     };
   }, []);
 
+  return logoutHandler
+}
+
+function Header() {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
+  const notificationList = useSelector((state) => state.notificationList);
+  const { notifications } = notificationList;
+  const {new_notifications} = notificationList
+
+  const dispatch = useDispatch();
+  const logoutHandler = useAutoLogout()
+
+
+  useEffect(() => {
+    dispatch(getnotificationList());
+  }, [dispatch]);
+
   const getNotificationCount = () => {
-    const unreadNotifications = 2;
-    return unreadNotifications.length > 9 ? "9+" : unreadNotifications.length;
+    const unreadNotifications = new_notifications ? new_notifications:0
+    return unreadNotifications > 9 ? "9+" : unreadNotifications;
   };
 
   const [showModal, setShowModal] = useState(false);
 
   const handleNotificationClick = () => {
-    dispatch(notificationList());
+    dispatch(getnotificationList());
     setShowModal(true);
   };
 
@@ -89,27 +101,37 @@ function Header() {
             <Nav style={{ marginLeft: "280px" }} className="ml-auto">
               {userInfo && !userInfo.isAdmin && (
                 <LinkContainer to="/cart">
+                  
                   <Nav.Link className="cartNav">
                     <i className="fas fa-shopping-cart cart-icon"></i>
                     <span className="cartItems">
                       {cartItems.reduce((acc, item) => acc + item.qty, 0)}
                     </span>
                   </Nav.Link>
+                  
+                  
                 </LinkContainer>
               )}
 
-              {userInfo ? (
-                <>
-                  <Nav.Link
+              
+
+                 {/* Only for admin */}
+                 {userInfo && userInfo.isAdmin && (
+                 <Nav.Link
                     className="bellNav"
                     onClick={handleNotificationClick}
                   >
                     <i className="fa-regular fa-bell bell-icon"></i>
                     <span className="notification-number">
-                      {getNotificationCount()}
+                      {getNotificationCount()?getNotificationCount():0}
                     </span>
-                  </Nav.Link>
+                  </Nav.Link> 
+                 )}
 
+
+              {userInfo ? (
+                <>
+                 
                   <NavDropdown
                     style={{ marginLeft: "30px" }}
                     title={
@@ -182,11 +204,15 @@ function Header() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {/* <NotificationModal
+
+      {userInfo && userInfo.isAdmin &&(
+
+      <NotificationModal
         show={showModal}
         handleClose={handleCloseModal}
         notifications={notifications}
-      /> */}
+      />
+      )}
     </header>
   );
 }

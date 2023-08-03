@@ -39,6 +39,10 @@ import {
   NOTIFICATION_REQUEST,
   NOTIFICATION_SUCCESS,
   NOTIFICATION_FAIL,
+
+  MARK_NOTIFICATION_SUCCESS,
+  MARK_NOTIFICATION_FAIL,
+  MARK_NOTIFICATION_REQUEST
 } from "../constants/bookConstants";
 
 export const bookListReducer = (state = { books: [] }, action) => {
@@ -120,20 +124,43 @@ export const myRequestBookListReducer = (state = { books: [] }, action) => {
 };
 
 export const notificationsListReducer = (
-  state = { notifications: [] },
+  state = { notifications: [],
+            new_notifications:0 },
   action
 ) => {
   switch (action.type) {
     case NOTIFICATION_REQUEST:
-      return { loading: true, notifications: [] };
+      return { loading: true, notifications: [], new_notifications:0 };
 
     case NOTIFICATION_SUCCESS:
       return {
         loading: false,
-        notifications: action.payload,
+        notifications: action.payload.notifications,
+        new_notifications:action.payload.unread_count
       };
 
     case NOTIFICATION_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const markNotficationsReducer = (
+  state = { },
+  action
+) => {
+  switch (action.type) {
+    case MARK_NOTIFICATION_REQUEST:
+      return { loading: true};
+
+    case MARK_NOTIFICATION_SUCCESS:
+      return {
+        loading: false,
+       
+      };
+    case MARK_NOTIFICATION_FAIL:
       return { loading: false, error: action.payload };
 
     default:

@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
 
 from rest_framework import status
+from django.db import transaction
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -16,7 +17,7 @@ from base.serializers import (
     CategorySerializer,
     AuthorSerializer,
     BookRequestSerializer,
-    # UserNotificationSerializer,
+    NotifiySerializer
 )
 
 from base.models import *
@@ -239,17 +240,27 @@ def createBookReview(request, pk):
         return Response("Review Added")
 
 
-# @permission_classes([IsAuthenticated])
-# @api_view(["GET"])
-# def getNotifications(request):
-#     user = request.user
-#     user_notifications = UserNotification.objects.filter(user=user, is_read=False)
-#     user_notifications.update(is_read=True)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def mark_notification_as_read(request):
+    unread_notifications = Notify.objects.filter(is_read=False)
+    unread_notifications.update(is_read=True)
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
-#     notifications = UserNotification.objects.exclude(user=user)
-#     serializer = UserNotificationSerializer(notifications, many=True)
+@permission_classes([IsAdminUser])
+@api_view(["GET"])
+def getNotifications(request):
+    unread_notifications = Notify.objects.filter(is_read=False)
+    
+    notifications = Notify.objects.all().order_by('-createdAt')
+    serializer = NotifiySerializer(notifications, many=True)
 
-#     return Response(serializer.data, status=status.HTTP_200_OK)
+    unread_count = unread_notifications.count()  
+    response_data = {
+            "notifications": serializer.data,
+            "unread_count": unread_count,  
+    }
+    return Response(response_data, status=status.HTTP_200_OK)
 
 
 @permission_classes([IsAdminUser])

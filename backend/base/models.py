@@ -151,27 +151,19 @@ class BookRequest(models.Model):
         return timesince(self.requestAt).split(", ")[0] + _(" ago")
 
     def __str__(self):
-        return str(self.name)
+        return f"{self.name} on {self.request_at}"
 
 
-# class Notification(models.Model):
-#     message = models.CharField(max_length=255)
-#     createdAt = models.DateTimeField(default=timezone.now, verbose_name=_("createAt"))
-#     _id = models.AutoField(primary_key=True, editable=False)
+class Notify(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True)
+    message = models.CharField(max_length=255, default=None, blank=True)
+    createdAt = models.DateTimeField(auto_now_add=True, verbose_name=("createAt"))
+    is_read = models.BooleanField(default=False)
+
+    @property
+    def created_at(self):
+        return timesince(self.createdAt).split(", ")[0] + _(" ago")
 
 
-#     @property
-#     def created_at_display(self):
-#         return timesince(self.createdAt).split(", ")[0] + _(" ago")
-
-#     def __str__(self):
-#         return str(self.message)
-
-# class UserNotification(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     notificationMessage = models.ForeignKey(Notification, on_delete=models.CASCADE)
-#     _id = models.AutoField(primary_key=True, editable=False)
-#     is_read = models.BooleanField(default=False)
-
-#     def __str__(self):
-#         return f"{self.notificationMessage.message}"
+    def __str__(self):
+        return f"{self.message} on {self.created_at}"
