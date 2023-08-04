@@ -39,7 +39,7 @@ import {
 
 const reducer = combineReducers({
   bookList: bookListReducer,
-  allRequestBooks:getAllBookRequestsReducer,
+  allRequestedBooks:getAllBookRequestsReducer,
   mybooks: myBookListReducer,
   bookRequest: bookRequestReducer,
   notificationList:notificationsListReducer,

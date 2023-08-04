@@ -75,7 +75,7 @@ def addOrderItems(request):
 @permission_classes([IsAuthenticated])
 def getMyOrders(request):
     user = request.user
-    orders = user.order_set.all()
+    orders = user.order_set.all().order_by('-createdAt')
 
     page = request.query_params.get("page")
     paginator = Paginator(orders, 4)

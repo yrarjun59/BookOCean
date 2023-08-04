@@ -266,7 +266,7 @@ def getNotifications(request):
 @permission_classes([IsAdminUser])
 @api_view(["GET"])
 def getBookRequests(request):
-    books = BookRequest.objects.all()
+    books = BookRequest.objects.all().order_by('-requestAt')
     serializer = BookRequestSerializer(books, many=True)
     return Response(serializer.data)
 

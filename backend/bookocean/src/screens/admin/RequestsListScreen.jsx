@@ -11,7 +11,7 @@ function RequestsListScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const listRequestBooks = useSelector((state) => state.allRequestBooks);
+  const listRequestBooks = useSelector((state) => state.allRequestedBooks);
   const { loading, error, books } = listRequestBooks;
   
   useEffect(() => {
