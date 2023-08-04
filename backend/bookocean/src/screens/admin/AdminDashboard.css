@@ -1,0 +1,77 @@
+
+.admin-dashboard {
+  margin-top: 20px;
+  background-color: #ffffff;
+  padding: 20px;
+  height: auto;
+}
+
+.dashboard-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.dashboard-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin: 10px;
+  background-color: var(--card-bg-color);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  /* height: 300px; */
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-card-value {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+/* Define different background colors for each card */
+.total-books {
+  --card-bg-color: #3B76EF; /* Blue background color for Total Books */
+}
+
+.total-users {
+  --card-bg-color: #63C7FF; /* Green background color for Total Users */
+}
+
+.book-requests {
+  --card-bg-color: #A66DD4; /* Red background color for Book Requests */
+}
+
+.total-orders {
+  --card-bg-color: #6DD4B1; /* Yellow background color for Total Orders */
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 10px;
+  }
+
+  .dashboard-card {
+    margin: 10px 0;
+    padding: 15px;
+    height: 200px;
+  }
+
+  .dashboard-card-value {
+    font-size: 28px;
+  }
+}
+
+.text-decoration{
+  text-decoration: none;
+}

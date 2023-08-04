@@ -25,16 +25,13 @@ const NotificationModal = ({ show, handleClose, notifications }) => {
   return (
     <Modal show={show} onHide={handleClose} className="notification-modal">
       <Modal.Header closeButton>
-
+        <div style={{display:"flex",justifyContent:"space-between",margin:"0",width:"90%"}}>
         <Modal.Title>Notifications</Modal.Title>
-        <Button
-    variant="primary"
-    className="ml-3"
-    onClick={markAllAsRead}
-    disabled={!hasUnreadNotifications}
-  >
-  Mark All as Read
-</Button>
+    
+        <Button className="mark-button" style={{marginLeft:"80px",padding:"5px"}} onClick={markAllAsRead}>
+        marks all as read
+      </Button>
+  </div> 
 
       </Modal.Header>
       <Modal.Body>

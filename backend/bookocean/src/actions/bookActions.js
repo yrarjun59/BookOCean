@@ -217,7 +217,6 @@ export const markNotfications = () => async (dispatch, getState) => {
   }
 };
 
-
 export const myRequestBooks = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -247,6 +246,43 @@ export const myRequestBooks = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: MY_BOOK_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getAllRequestedBooks = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type:BOOK_REQUEST_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `http://127.0.0.1:8000/api/books/requests/`,
+      config
+    );
+
+    dispatch({
+      type:BOOK_REQUEST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type:BOOK_REQUEST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

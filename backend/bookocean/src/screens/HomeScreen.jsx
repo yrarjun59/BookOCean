@@ -41,12 +41,13 @@ function HomeScreen() {
 
   useEffect(() => {
     dispatch(listBooks(keyword));
-  }, [dispatch, keyword]);
+  }, [dispatch, keyword,navigate]);
 
   return (
     <>
       {userInfo && userInfo.isAdmin ? (
         <AdminDashBoard />
+
       ) : (
         <div className="m-100">
           <ToastContainer />

@@ -21,6 +21,7 @@ import {
   bookTopRatedReducer,
   bookUpdateReducer,
   categoryListReducer,
+  getAllBookRequestsReducer,
   markNotficationsReducer,
   myBookListReducer,
   myRequestBookListReducer,
@@ -38,6 +39,7 @@ import {
 
 const reducer = combineReducers({
   bookList: bookListReducer,
+  allRequestBooks:getAllBookRequestsReducer,
   mybooks: myBookListReducer,
   bookRequest: bookRequestReducer,
   notificationList:notificationsListReducer,

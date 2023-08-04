@@ -403,6 +403,29 @@ h3 {
 
 
 .Toastify{
-  left:50%;
-  right: 50%;
+  position: relative;
+  right: 900px;
+  background-color: #03314b;
 }
+
+.mark-button{
+  background-color: var(--primary-color);
+  border-radius: 20px;
+  padding: 10px;
+  font-weight: bolder;
+  margin-left: 80px;
+}
+
+.modal-dialog{
+  right: 0;
+}
+
+.Toastify__toast-container{
+  right: 600px;
+  top: 200px;
+}
+
+/* #3B76EF */
+/* #63C7FF */
+/* #A66DD4 */
+/* #6DD4B1 */

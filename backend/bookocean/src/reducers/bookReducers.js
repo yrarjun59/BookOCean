@@ -104,6 +104,25 @@ export const bookRequestReducer = (state = {}, action) => {
   }
 };
 
+export const getAllBookRequestsReducer = (state= {books:[] }, action) => {
+  switch (action.type) {
+    case BOOK_REQUEST_REQUEST:
+      return { loading: true, books: [] };
+
+    case BOOK_REQUEST_SUCCESS:
+      return { loading: false, success: true, books: action.payload };
+
+    case BOOK_REQUEST_FAIL:
+      return { loading: false, error: action.payload };
+
+    case BOOK_REQUEST_RESET:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
 export const myRequestBookListReducer = (state = { books: [] }, action) => {
   switch (action.type) {
     case MY_BOOK_REQUEST:
