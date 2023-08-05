@@ -10,25 +10,28 @@ import {
 } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { PayPalButton } from "react-paypal-button-v2";
 import Message from "../components/Message";
-import Loader from "../components/Loader";
+import spinLoader from "../components/SpinLoader";
 import {
   getOrderDetails,
   payOrder,
-  deliverOrder,
+  markOrderAsdelivered,
 } from "../actions/orderActions";
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
 } from "../constants/orderConstants";
+import formateDate from "../assets/js/formateDate";
+import KhaltiPayment from "../payment-gateway/khalti/KhaltiPayment";
+import { toast } from "react-toastify";
+
 
 function OrderScreen() {
   const { id: orderId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [sdkReady, setSdkReady] = useState(false);
+  const [khaltiDone, setKhaltiDone] = useState(false);
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, error, loading } = orderDetails;
@@ -49,28 +52,34 @@ function OrderScreen() {
   }
 
   useEffect(() => {
-    if (!userInfo) {
-      navigate("/login");
+    if (!order || order._id !== Number(orderId) || successDeliver) {
+      dispatch({ type: ORDER_DELIVER_RESET });
+
+      dispatch(getOrderDetails(orderId));
     }
-  }, []);
+  }, [dispatch, order, orderId, successDeliver]);
 
-  const successPaymentHandler = (paymentResult) => {
-    dispatch(payOrder(orderId, paymentResult));
+
+  const successPaymentHandler = async () => {
+    dispatch(payOrder(orderId));
+    await KhaltiPayment(orderId, order.totalPrice);  
+      setKhaltiDone(true);    
   };
-
-  const deliverHandler = () => {
-    dispatch(deliverOrder(order));
+  
+  const markAsdeliverHandler = () => {
+    dispatch(markOrderAsdelivered(order))
     console.log("order successfully delivered");
     alert("order");
   };
 
   return loading ? (
-    <Loader />
+    <spinLoader />
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
+    <>
     <div style={{ marginLeft: "100px", marginRight: "100px" }}>
-      <h1>Order: {order.Id}</h1>
+      <h1>Order: {orderId}</h1>
       <Row>
         <Col md={6}>
           <ListGroup variant="flush">
@@ -81,7 +90,7 @@ function OrderScreen() {
                 {order.paymentMethod}
               </p>
               {order.isPaid ? (
-                <Message variant="success">Paid on {order.paidAt}</Message>
+                <Message variant="success">Paid on {formateDate(order.paidAt)}</Message>
               ) : (
                 <Message variant="warning">Not Paid</Message>
               )}
@@ -105,7 +114,7 @@ function OrderScreen() {
 
               {order.isDelivered ? (
                 <Message variant="success">
-                  Delivered on {order.deliveredAt}
+                  Delivered on {formateDate(order.deliveredAt)}
                 </Message>
               ) : (
                 <Message variant="warning">Not Delivered</Message>
@@ -194,24 +203,24 @@ function OrderScreen() {
 
               {!order.isPaid && (
                 <ListGroup.Item>
-                  {loadingPay && <Loader />}
-
-                  {!sdkReady ? (
-                    <Loader />
-                  ) : (
+                  {loadingPay && <spinLoader />}
                     <Button
                       className="btn-paid"
                       amount={order.totalPrice}
-                      onSuccess={successPaymentHandler}
+                      onClick={successPaymentHandler}
                     >
-                      Mark Order as Paid
+                      Pay with Khalti
                     </Button>
-                  )}
                 </ListGroup.Item>
+              )}
+
+              {order.isPaid && !userInfo.isAdmin && (
+                 <Message variant="success">Please Wait for Delivery..</Message>
               )}
             </ListGroup>
 
-            {loadingDeliver && <Loader />}
+
+            {loadingDeliver && <spinLoader />}
             {userInfo &&
               userInfo.isAdmin &&
               order.isPaid &&
@@ -219,17 +228,24 @@ function OrderScreen() {
                 <ListGroup.Item>
                   <Button
                     className="btn-deliver"
-                    onClick={() => deliverHandler}
+                    onClick={markAsdeliverHandler}
                   >
                     Mark As Delivered
                   </Button>
                 </ListGroup.Item>
               )}
+
           </Card>
         </Col>
       </Row>
     </div>
+
+
+</>
+    
   );
 }
+
+
 
 export default OrderScreen;

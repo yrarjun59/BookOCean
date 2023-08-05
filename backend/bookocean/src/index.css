@@ -3,6 +3,7 @@
   --secondary-color: #ff7a5c;
   --text-color: #03314b;
   --moto-color: #d90077;
+  --khalti-color:#5E338D;
 }
 
 main {
@@ -345,12 +346,16 @@ h3 {
 }
 
 .btn-deliver,
-.btn-paid,
-.btn-deliver:hover,
-.btn-paid:hover {
+.btn-deliver:hover {
   width: 100%;
   color: white;
   background-color: var(--secondary-color);
+}
+
+.btn-paid,.btn-paid:hover{
+  width: 100%;
+  background-color:var(--khalti-color);
+  font-size: 20px;
 }
 
 .payment-options {

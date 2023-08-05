@@ -126,7 +126,6 @@ def getOrders(request):
 @permission_classes([IsAuthenticated])
 def getOrderById(request, pk):
     user = request.user
-
     try:
         order = Order.objects.get(_id=pk)
         if user.is_staff or order.user == user:

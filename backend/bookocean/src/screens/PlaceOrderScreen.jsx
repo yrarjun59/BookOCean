@@ -28,18 +28,20 @@ function PlaceOrderScreen() {
     Number(cart.taxPrice)
   ).toFixed(2);
 
-  useEffect(() => {
-    if (!cart.paymentMethod) {
-      navigate("/payment");
+  useEffect(()=>{
+    if(success){
+      navigate(`/order/${order._id}`)
+      dispatch({type: ORDER_CREATE_RESET})
     }
-  }, [cart.paymentMethod, navigate]);
-
-  useEffect(() => {
-    if (success) {
-      navigate(`/order/${order._id}`);
-      dispatch({ type: ORDER_CREATE_RESET });
+    
+    if(!cart.paymentMethod){
+      navigate('/payment')
     }
-  }, [success, order, navigate, dispatch]);
+    
+    if(!cart.shippingAddress){
+      navigate('/shipping')
+    }
+  },[success, order, dispatch])
 
   const placeOrder = () => {
     dispatch(

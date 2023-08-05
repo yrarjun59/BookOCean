@@ -107,7 +107,8 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
+// export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
+export const payOrder = (id, paymentResult="Success") => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_PAY_REQUEST,
@@ -123,6 +124,7 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
+    
 
     const { data } = await axios.put(
       `http://127.0.0.1:8000/api/orders/${id}/pay/`,
@@ -145,7 +147,7 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
   }
 };
 
-export const deliverOrder = (order) => async (dispatch, getState) => {
+export const markOrderAsdelivered = (order) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_DELIVER_REQUEST,

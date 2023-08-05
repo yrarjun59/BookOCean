@@ -7,6 +7,9 @@ import Message from "../../components/Message";
 import { listOrders } from "../../actions/orderActions";
 import { useNavigate } from "react-router-dom";
 import Paginate from "../../components/Paginate";
+import formateDate from "../../assets/js/formateDate";
+import spinLoader from "../../components/spinLoader";
+
 
 function OrderListScreen() {
   const dispatch = useDispatch();
@@ -30,7 +33,7 @@ function OrderListScreen() {
     <div className="mx-100">
       <h1>Orders</h1>
       {loading ? (
-        <Loader />
+        <spinLoader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
@@ -53,22 +56,22 @@ function OrderListScreen() {
                 <tr key={order._id}>
                   <td>{order._id}</td>
                   <td>{order.user && order.user.name}</td>
-                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>{formateDate(order.createdAt)}</td>
                   <td>Rs {order.totalPrice}</td>
 
                   <td>
                     {order.isPaid ? (
-                      order.paidAt.substring(0, 10)
+                      formateDate(order.paidAt)
                     ) : (
-                      <i className="fas fa-check" style={{ color: "red" }}></i>
+                      <i className="fas fa-solid fa-x" style={{ color: "red" }}></i>
                     )}
                   </td>
 
                   <td>
                     {order.isDelivered ? (
-                      order.deliveredAt.substring(0, 10)
+                      formateDate(order.deliveredAt)
                     ) : (
-                      <i className="fas fa-check" style={{ color: "red" }}></i>
+                      <i className="fas fa-solid fa-x" style={{ color: "red" }}></i>
                     )}
                   </td>
 

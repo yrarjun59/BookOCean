@@ -1,42 +1,43 @@
-import React from "react";
 import axios from "axios";
-import khaltiConfig from "./KhaltiConfig";
-import { Image } from "react-bootstrap";
+import SpinLoader from "../../components/SpinLoader";
 
-const KhaltiPayment = () => {
-  const initiatePayment = async () => {
-    try {
-      const payload = {
-        amount: 1000,
-        mobile: "9812345678",
-        productIdentity: "1234567890",
-        productName: "Test Product",
-        productUrl: "https://example.com/product",
-      };
+const KhaltiPayment = async (id,totalAmount) => {
+    const key = "eb81731dcf59441381a7cf1ad74d8410";
+    const url = "https://a.khalti.com/api/v2/epayment/initiate/";
 
-      const response = await axios.post(
-        `${khaltiConfig.url}epayment/initiate/`,
-        payload,
-        {
-          headers: {
-            Authorization: `Key ${khaltiConfig.key}`,
-          },
-        }
-      );
-
-      console.log(response.data);
-      // Handle the response and further processing
-    } catch (error) {
-      console.error("Error initiating payment:", error.message);
-      // Handle errors or display error message to the user
-    }
+    const payload = {
+      return_url: `http://localhost:5173/#/order/${id}`,
+      website_url: "http://localhost:5173/",
+      amount: totalAmount * 100, // convert to paisa
+      purchase_order_id: id, 
+      purchase_order_name: "test",   
   };
+    
+    const config = {
+        headers: {
+            "Content-type": "application/json",
+            Authorization: `Key ${key}`,
+        },
+    };
 
-  return (
-    <div onClick={initiatePayment}>
-      <Image className="payment-icon" src="./khalti.svg" />
-    </div>
-  );
+    try {
+        const response = await axios.post(url, payload, config);
+
+        if (response.status === 200) {
+            const data = response.data;
+            console.log({data});       
+
+            window.location.href = data.payment_url
+
+            
+        
+        } else {
+            console.error('Error:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error:', error.response.data);
+    }
+
 };
 
 export default KhaltiPayment;

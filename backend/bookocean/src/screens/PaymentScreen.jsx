@@ -15,12 +15,11 @@ function PaymentScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const [paymentMethod, setPaymentMethod] = useState("Khalti");
 
-  const handlePaymentOptionClick = (option, e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
-    setPaymentMethod(option);
-    dispatch(savePaymentMethod(option));
+    dispatch(savePaymentMethod(paymentMethod));
     navigate("/placeorder");
   };
 
@@ -34,23 +33,27 @@ function PaymentScreen() {
     <FormContainer>
       <CheckoutSteps step1 step2 step3 />
 
-      <Form.Label>Select Payment Method</Form.Label>
-      <div className="payment-options">
-        {/* <div className="payment-option">
-          <Image className="payment-icon" src="./esewa.svg" />
-        </div>
+    <Form onSubmit={submitHandler}>
+    <Form.Group>
+        <Form.Label as='legend'>Payment Methods</Form.Label>
+        <Col>
 
-        <div className="payment-option">
-          <KhaltiPayment />
-        </div> */}
-
-        <div
-          className="payment-option"
-          onClick={(e) => handlePaymentOptionClick("cash", e)}
+         <Button
+         type='submit'
+         style={{
+            background: 'transparent',
+            border: 'none',
+            padding: 0,
+            margin: 0,
+            cursor: 'pointer'
+          }}
         >
-          <Image className="payment-icon-cash" src="./Cash.png" />
-        </div>
-      </div>
+          <Image className="payment-icon" src="./khalti.svg" alt="Khalti Image" />
+        </Button>
+
+        </Col>
+    </Form.Group>
+</Form>
     </FormContainer>
   );
 }

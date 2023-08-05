@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-d3_^sn4xq9&vpelbekjj2hnp@9ynehngiq#n@)sz-wp_d+d7o7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost","*"]
 
 SITE_ID = 1
 # Application definition
@@ -168,6 +168,11 @@ STATICFILES_DIRS = [BASE_DIR / "static", BASE_DIR / "bookocean/dist/assets"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    'https://a.khalti.com',
+]
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
