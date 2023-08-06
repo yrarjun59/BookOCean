@@ -8,7 +8,7 @@ const KhaltiPayment = async (id,totalAmount) => {
     const payload = {
       return_url: `http://localhost:5173/#/order/${id}`,
       website_url: "http://localhost:5173/",
-      amount: totalAmount * 100, // convert to paisa
+      amount: totalAmount * 100, // convert to rupee
       purchase_order_id: id, 
       purchase_order_name: "test",   
   };
@@ -28,8 +28,6 @@ const KhaltiPayment = async (id,totalAmount) => {
             console.log({data});       
 
             window.location.href = data.payment_url
-
-            
         
         } else {
             console.error('Error:', response.statusText);

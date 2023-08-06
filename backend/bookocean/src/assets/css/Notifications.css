@@ -11,6 +11,7 @@
 .notification-item {
   padding: 10px; 
   border-bottom: 1px solid #e6e6e6; 
+}
 
 .notification-image img {
   width: 40px; /* Set the width of the recipient image */
@@ -26,4 +27,13 @@
 .notification-time {
   color: #999999; 
   font-size: 0.8rem; 
+}
+
+.notification-item.unread {
+  font-weight: bold;
+  background-color: #f1f8e9; 
+}
+
+.notification-item.read {
+  opacity: 0.6;
 }

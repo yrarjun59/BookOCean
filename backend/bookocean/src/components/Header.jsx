@@ -174,7 +174,7 @@ function Header() {
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
-                    <i class="fa-solid fa-circle-arrow-right user-login">
+                    <i className="fa-solid fa-circle-arrow-right user-login">
                       Login
                     </i>
                   </Nav.Link>

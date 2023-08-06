@@ -36,10 +36,11 @@ const NotificationModal = ({ show, handleClose, notifications }) => {
       </Modal.Header>
       <Modal.Body>
       <ToastContainer />
-        
         <div className="notification-container">
           {notifications.map((notification, index) => (
-            <div key={index} className="notification-item">
+            <div key={index}  className={`notification-item ${
+              notification.is_read ? "read" : "unread"
+            }`}>   
               <Row>
                 <Col xs={2} className="notification-image">
                   <img
