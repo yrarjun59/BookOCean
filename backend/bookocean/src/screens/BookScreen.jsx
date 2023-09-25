@@ -17,6 +17,12 @@ import { detailBook, createBookReview } from "../actions/bookActions";
 import { BOOK_CREATE_REVIEW_RESET } from "../constants/bookConstants";
 import { addToCart } from "../actions/cartActions";
 import formateDate from "../assets/js/formateDate";
+import "../assets/css/recommend.css"
+import RBook from "../components/rBook";
+import SpinLoader from "../components/SpinLoader";
+
+
+
 
 function BookScreen() {
   const { id: bookId } = useParams();
@@ -24,11 +30,13 @@ function BookScreen() {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [showRecommendations, setShowRecommendations] = useState(false);
+
 
   const dispatch = useDispatch();
 
   const bookDetails = useSelector((state) => state.bookDetails);
-  const { loading, error, book } = bookDetails;
+  const { loading, error, book,recommended_books } = bookDetails;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -40,6 +48,13 @@ function BookScreen() {
     success: successbookReview,
   } = bookReviewCreate;
 
+
+  const showRecommendationsAfterDelay = () => {
+    setTimeout(() => {
+      setShowRecommendations(true);
+    }, 5000); 
+  };
+
   useEffect(() => {
     if (successbookReview) {
       setRating(0);
@@ -48,7 +63,8 @@ function BookScreen() {
     }
 
     dispatch(detailBook(bookId));
-  }, [dispatch, successbookReview]);
+    showRecommendationsAfterDelay();
+  }, [dispatch, successbookReview,showRecommendations]);
 
   const addToCartHandler = () => {
     dispatch(addToCart(bookId));
@@ -155,7 +171,7 @@ function BookScreen() {
 
           {/* for Reviews */}
           <Row>
-            <Col md={9}>
+            <Col md={4}>
               <h4 style={{ marginLeft: "20px", marginTop: "20px" }}>Reviews</h4>
               {book.reviews.length === 0 && (
                 <Message variant="info">No Reviews</Message>
@@ -236,11 +252,34 @@ function BookScreen() {
                 </ListGroup.Item>
               </ListGroup>
             </Col>
+            {/* for Recommendation books        */}
+            <Col md={8}>
+              {showRecommendations && (
+            <>
+              <h1>Books on Same Category</h1>
+              <Row>
+                {recommended_books.length > 0 ? (
+                  recommended_books.map((book) => (
+                    <Col key={book._id} xs={3} sm={4} md={2} lg={3}>
+                      <div className="recommended-book">
+                        <RBook book={book} />
+                      </div>
+                    </Col>
+                  ))
+                ) : (
+                  <SpinLoader />
+                )}
+              </Row>
+          </>
+                   )}
+            </Col>
           </Row>
+
         </div>
       )}
     </div>
   );
 }
+
 
 export default BookScreen;

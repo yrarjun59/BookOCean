@@ -33,6 +33,8 @@ def getBooks(request):
     page = request.query_params.get("page")
     paginator = Paginator(books, 8)
     print("page:", page)
+    length = len(books)
+    print("length:", length)
 
     try:
         books = paginator.page(page)
@@ -48,7 +50,7 @@ def getBooks(request):
 
     serializer = BookSerializer(books, many=True)
     return Response(
-        {"books": serializer.data, "page": page, "pages": paginator.num_pages}
+        {"books": serializer.data, "page": page, "pages": paginator.num_pages,"length":length}
     )
 
 
@@ -56,7 +58,14 @@ def getBooks(request):
 def getBook(request, pk):
     book = Book.objects.get(_id=pk)
     serializer = BookSerializer(book, many=False)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+
+    recommended_books = Book.objects.filter(category=book.category).exclude(_id=book._id)
+    recommendedSerializer = BookSerializer(recommended_books,many=True)
+
+    return Response({
+        "book":serializer.data,"recommended_books":recommendedSerializer.data
+    })
+    
 
 
 @api_view(["GET"])

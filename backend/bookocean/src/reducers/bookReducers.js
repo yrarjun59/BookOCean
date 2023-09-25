@@ -234,7 +234,10 @@ export const bookDetailsReducer = (
       return { loading: true, ...state };
 
     case BOOK_DETAILS_SUCCESS:
-      return { loading: false, book: action.payload };
+      return { 
+        loading: false, 
+        book: action.payload.book,
+        recommended_books:action.payload.recommended_books };
 
     case BOOK_DETAILS_FAIL:
       return { loading: false, error: action.payload };

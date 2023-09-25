@@ -180,7 +180,7 @@ function Header() {
                   </Nav.Link>
                 </LinkContainer>
               )}
-
+{/* 
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title="Admin" id="adminmenue">
                   <LinkContainer to="/admin/userlist">
@@ -199,7 +199,9 @@ function Header() {
                     <NavDropdown.Item>Requests</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
-              )}
+              )} */}
+
+
             </Nav>
           </Navbar.Collapse>
         </Container>

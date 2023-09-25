@@ -1,18 +1,24 @@
 .carousel-container{
     position: relative;
     border-radius: 10px;
-    /* border:5px solid red; */
-    /* background-color: #ccbfbf; */
+    background-color: #e6c611;
+    box-shadow: 0 0 10px #000000;
     height: 230px;
 }
 
 .carousel-button{
     top: 0;
     position:absolute;
-    /* background-color: red; */
+    background-color: red;
     /* width: 20px; */
     /* color: red; */
 
+}
+
+.carousel-indicators > button{
+  /* background-color: black; */
+  color: black;
+  background-color: aqua;
 }
 
 .carousel-image{
