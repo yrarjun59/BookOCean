@@ -7,29 +7,31 @@ import {
   UPDATE_CART_ITEM_QUANTITY,
 } from "../constants/cartConstants";
 
-export const addToCart =
-  (id, qty = 1) =>
-  async (dispatch, getState) => {
+export const addToCart = (id, qty = 1) => async (dispatch, getState) => {
+  try {
     const { data } = await axios.get(`http://127.0.0.1:8000/api/books/${id}/`);
+    
 
     dispatch({
       type: ADD_TO_CART,
       payload: {
-        bookId: data._id,
-        name: data.name,
-        image: data.image,
-        price: data.price,
-        countInStock: data.countInStock,
-        author: data.author,
-        category: data.category,
+        bookId: data.book._id, 
+        name: data.book.name, 
+        image: data.book.image, 
+        price: data.book.price, 
+        countInStock: data.book.countInStock, 
+        author: data.book.author, 
+        category: data.book.category, 
         qty,
       },
     });
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(getState().cart.cartItems)
-    );
-  };
+
+    localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+  }
+};
+
 
 export const updateCartItemQuantity =
   (bookId, updatedQty) => (dispatch, getState) => {

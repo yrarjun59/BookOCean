@@ -53,6 +53,7 @@ function MyOrderScreen() {
                       <th>Total</th>
                       <th>Paid</th>
                       <th>Delivered</th>
+                      <th>Details</th>
                     </tr>
                   </thead>
 
@@ -62,6 +63,7 @@ function MyOrderScreen() {
                         <td>{order._id}</td>
                         <td>{formateDate(order.createdAt)}</td>
                         <td>Rs {order.totalPrice}</td>
+                     
                         <td>
                           {order.isPaid ? (
                             formateDate(order.paidAt)
@@ -72,6 +74,18 @@ function MyOrderScreen() {
                             ></i>
                           )}
                         </td>
+                     
+                        <td>
+                          {order.Delivered ? (
+                            formateDate(order.deliveredAt)
+                          ) : (
+                            <i
+                              className="fas fa-times"
+                              style={{ color: "red" }}
+                            ></i>
+                          )}
+                        </td>
+                     
                         <td>
                           <LinkContainer to={`/order/${order._id}`}>
                             <Button className="btn-sm">Details</Button>

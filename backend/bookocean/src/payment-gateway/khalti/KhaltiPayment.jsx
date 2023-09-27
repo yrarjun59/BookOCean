@@ -1,16 +1,22 @@
 import axios from "axios";
 import SpinLoader from "../../components/SpinLoader";
 
-const KhaltiPayment = async (id,totalAmount) => {
-    const key = "eb81731dcf59441381a7cf1ad74d8410";
+const KhaltiPayment = async (id,totalAmount,product_name,user_name) => {
+    const key = '2d7a2097f38449c281d034f0b54911c5';
     const url = "https://a.khalti.com/api/v2/epayment/initiate/";
 
     const payload = {
       return_url: `http://localhost:5173/#/order/${id}`,
       website_url: "http://localhost:5173/",
-      amount: totalAmount * 100, // convert to rupee
+      amount: totalAmount * 100, 
       purchase_order_id: id, 
-      purchase_order_name: "test",   
+      purchase_order_name: product_name,
+      customer_info: {
+        "name": user_name,
+        "email": "user_name@gmail.com",
+        "phone": "9811496763",
+        "address": "Address 3 Main Street"
+    },
   };
     
     const config = {
@@ -22,6 +28,8 @@ const KhaltiPayment = async (id,totalAmount) => {
 
     try {
         const response = await axios.post(url, payload, config);
+
+        console.log("Response  is" , response)
 
         if (response.status === 200) {
             const data = response.data;

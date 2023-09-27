@@ -26,6 +26,8 @@ import SpinLoader from "../components/SpinLoader";
 
 function BookScreen() {
   const { id: bookId } = useParams();
+
+  console.log("this is the id",bookId)
   const navigate = useNavigate();
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
@@ -67,6 +69,7 @@ function BookScreen() {
   }, [dispatch, successbookReview,showRecommendations]);
 
   const addToCartHandler = () => {
+    console.log("cartHandler book passing id", bookId);
     dispatch(addToCart(bookId));
     navigate(`/cart`);
   };
@@ -119,7 +122,7 @@ function BookScreen() {
                   />
                 </ListGroup.Item>
 
-                <ListGroup.Item>Price: Rs{book.price}</ListGroup.Item>
+                <ListGroup.Item>Price: Rs {book.price}</ListGroup.Item>
 
                 <ListGroup.Item>Description: {book.description}</ListGroup.Item>
               </ListGroup>
@@ -149,11 +152,12 @@ function BookScreen() {
                     <Row>
                       <Col>Status:</Col>
                       <Col>
-                        {book.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                        {book.countInStock > 0 ? <h5 style={{color:"green"}}>Available</h5> : <h5 style={{color:"red"}}>Not Available</h5>}
                       </Col>
                     </Row>
                   </ListGroup.Item>
 
+                  {userInfo && !userInfo.isAdmin &&(
                   <ListGroup.Item>
                     <Button
                       onClick={addToCartHandler}
@@ -164,6 +168,8 @@ function BookScreen() {
                       Add to Cart
                     </Button>
                   </ListGroup.Item>
+                  )}
+
                 </ListGroup>
               </Card>
             </Col>
@@ -252,22 +258,24 @@ function BookScreen() {
                 </ListGroup.Item>
               </ListGroup>
             </Col>
+
             {/* for Recommendation books        */}
-            <Col md={8}>
+            <Col md={8}> 
               {showRecommendations && (
             <>
-              <h1>Books on Same Category</h1>
+              <h4>Books on Same Category</h4>
               <Row>
                 {recommended_books.length > 0 ? (
                   recommended_books.map((book) => (
                     <Col key={book._id} xs={3} sm={4} md={2} lg={3}>
+
                       <div className="recommended-book">
                         <RBook book={book} />
                       </div>
                     </Col>
                   ))
                 ) : (
-                  <SpinLoader />
+                  ""
                 )}
               </Row>
           </>

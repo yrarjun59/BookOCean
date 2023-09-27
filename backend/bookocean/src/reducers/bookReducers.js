@@ -56,6 +56,7 @@ export const bookListReducer = (state = { books: [] }, action) => {
         books: action.payload.books,
         page: action.payload.page,
         pages: action.payload.pages,
+        totalBooks:action.payload.length
       };
 
     case BOOK_LIST_FAIL:

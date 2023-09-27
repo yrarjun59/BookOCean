@@ -24,17 +24,10 @@ import {
 } from "../actions/cartActions";
 
 function CartScreen() {
-  const { id: bookId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (bookId) {
-      dispatch(addToCart(bookId));
-    }
-  }, [dispatch, bookId]);
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;

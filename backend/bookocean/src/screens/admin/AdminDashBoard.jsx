@@ -13,7 +13,7 @@ function AdminDashboard() {
   const dispatch = useDispatch()
 
   const bookList = useSelector((state) => state.bookList);
-  const { books,loading } = bookList;
+  const { books,loading,totalBooks } = bookList;
 
   const orderList = useSelector((state) => state.orderList);
   const { orders, loading:ordersLoading } = orderList;
@@ -24,7 +24,6 @@ function AdminDashboard() {
   const userList = useSelector((state) => state.userList);
   const { users, loading:uesrsLoading } = userList;
 
-  const totalBooks = books ? books.length : 0;
   const totalUsers = users ? users.length : 0;
   const bookRequests = requestBooks ? requestBooks.length : 0;
   const totalOrders = orders ? orders.length : 0;

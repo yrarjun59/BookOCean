@@ -11,7 +11,7 @@ import {
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
-import spinLoader from "../components/SpinLoader";
+import SpinLoader from "../components/SpinLoader";
 import {
   getOrderDetails,
   payOrder,
@@ -33,17 +33,27 @@ function OrderScreen() {
 
   const [khaltiDone, setKhaltiDone] = useState(false);
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const {name:user_name} = {userInfo}
+
   const orderDetails = useSelector((state) => state.orderDetails);
-  const { order, error, loading } = orderDetails;
+  const { order, error, loading} = orderDetails;
+
+  
+
+  // const orderItems = order.orderItems;
+  // console.log(orderItems)
+  // const product_name = order.orderItems && order.orderItems.length > 0 ? order.orderItems[0].name : "";
+
+  const product_name = "book"
+
 
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
 
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
 
   if (!loading && !error) {
     order.itemsPrice = order.orderItems
@@ -62,7 +72,7 @@ function OrderScreen() {
 
   const successPaymentHandler = async () => {
     dispatch(payOrder(orderId));
-    await KhaltiPayment(orderId, order.totalPrice);  
+    await KhaltiPayment(orderId, order.totalPrice,product_name,user_name,);  
       setKhaltiDone(true);    
   };
   
@@ -73,7 +83,7 @@ function OrderScreen() {
   };
 
   return loading ? (
-    <spinLoader />
+    <SpinLoader />
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
@@ -203,7 +213,7 @@ function OrderScreen() {
 
               {!order.isPaid && (
                 <ListGroup.Item>
-                  {loadingPay && <spinLoader />}
+                  {loadingPay && <SpinLoader />}
                     <Button
                       className="btn-paid"
                       amount={order.totalPrice}
@@ -220,7 +230,7 @@ function OrderScreen() {
             </ListGroup>
 
 
-            {loadingDeliver && <spinLoader />}
+            {loadingDeliver && <SpinLoader />}
             {userInfo &&
               userInfo.isAdmin &&
               order.isPaid &&
