@@ -11,6 +11,9 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from sklearn.metrics.pairwise import cosine_similarity
+import pandas as pd
+
 
 from base.serializers import (
     BookSerializer,
@@ -57,13 +60,56 @@ def getBooks(request):
 @api_view(["GET"])
 def getBook(request, pk):
     book = Book.objects.get(_id=pk)
-    serializer = BookSerializer(book, many=False)
+    allBooks = Book.objects.all()
+
+    # Create a pandas DataFrame with book data
+    # book_data = pd.DataFrame(list(allBooks.values()))
+
+    # # Select features for collaborative filtering (e.g., 'category', 'author', 'rating', etc.)
+    # selected_features = ['_id','category_id', 'author_id', 'rating']
+
+    # # Create a subset of the DataFrame with selected features
+    # book_data_subset = book_data[selected_features]
+    # print(book_data_subset)
+
+    # # Calculate cosine similarity between books based on the selected features
+    # similarity_matrix = cosine_similarity(book_data_subset)
+
+    # # book_indices = book_data[book_data['_id'] == pk].index
+    # book_indices = book_data[book_data['_id']==int(pk)].index
+
+    # if not book_indices.empty:
+    #     book_index = book_indices[0]
+    # else:
+    #     return Response({"error": "Book not found in DataFrame"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+    # Get the similarity scores for the current book
+
+    # similar_books_indices = similarity_matrix[book_index]
+    # print("similar_books_indices",similar_books_indices)
+
+    # Sort the books based on similarity scores
+    # recommended_books_indices = similar_books_indices.argsort()[::-1]
+    # print(recommended_books_indices)
+
+    # Extract book details for the recommended books
+    # recommended_books = allBooks.filter(_id__in=book_data['_id'].iloc[recommended_books_indices])
+    # print(recommended_books)
+    # recommendedSerializer = BookSerializer(recommended_books,many=True)
+
 
     recommended_books = Book.objects.filter(category=book.category).exclude(_id=book._id)
     recommendedSerializer = BookSerializer(recommended_books,many=True)
 
+
+    serializer = BookSerializer(book, many=False)
+    
+
     return Response({
-        "book":serializer.data,"recommended_books":recommendedSerializer.data
+        "book":serializer.data,
+        "recommended_books":recommendedSerializer.data
     })
     
 

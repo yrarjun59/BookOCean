@@ -1,7 +1,6 @@
 import axios from "axios";
-import SpinLoader from "../../components/SpinLoader";
 
-const KhaltiPayment = async (id,totalAmount,product_name,user_name) => {
+const KhaltiPayment = async (id,totalAmount,product_name) => {
     const key = '2d7a2097f38449c281d034f0b54911c5';
     const url = "https://a.khalti.com/api/v2/epayment/initiate/";
 
@@ -12,7 +11,7 @@ const KhaltiPayment = async (id,totalAmount,product_name,user_name) => {
       purchase_order_id: id, 
       purchase_order_name: product_name,
       customer_info: {
-        "name": user_name,
+        "name": 'user_name',
         "email": "user_name@gmail.com",
         "phone": "9811496763",
         "address": "Address 3 Main Street"
@@ -41,7 +40,7 @@ const KhaltiPayment = async (id,totalAmount,product_name,user_name) => {
             console.error('Error:', response.statusText);
         }
     } catch (error) {
-        console.error('Error:', error.response.data);
+        console.error(error);
     }
 
 };
