@@ -113,8 +113,7 @@ function Header() {
                 </LinkContainer>
               )}
 
-              
-
+            
                  {/* Only for admin */}
                  {userInfo && userInfo.isAdmin && (
                  <Nav.Link
@@ -135,15 +134,16 @@ function Header() {
                   <NavDropdown
                     style={{ marginLeft: "30px" }}
                     title={
+                      
+
                       <Image
-                        src={
-                          userInfo.profile ? userInfo.profile.profile_image : ""
-                        }
+                        src={userInfo.profile ? `http://127.0.0.1:8000${userInfo.profile.profile_image}` :""}
                         alt="profile_image"
                         roundedCircle
                         width={30}
                         height={30}
                       />
+
                     }
                     id="username"
                   >

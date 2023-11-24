@@ -355,7 +355,7 @@ export const listTopBooks = () => async (dispatch) => {
   try {
     dispatch({ type: BOOK_TOP_REQUEST });
 
-    const { data } = await axios.get(`http://127.0.0.1:8000//api/books/top/`);
+    const { data } = await axios.get(`http://127.0.0.1:8000/api/books/top/`);
 
     dispatch({
       type: BOOK_TOP_SUCCESS,

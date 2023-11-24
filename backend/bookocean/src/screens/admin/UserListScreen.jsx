@@ -63,7 +63,7 @@ function UserListScreen() {
                       objectFit: "contain",
                     }}
                     roundedCircle
-                    src={`http://127.0.0.1:8000/${user.profile.profile_image}`}
+                    src={`http://127.0.0.1:8000${user.profile.profile_image}`}
                   />
                 </td>
                 <td>{user.name}</td>

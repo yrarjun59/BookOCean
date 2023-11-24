@@ -50,6 +50,8 @@ function BookScreen() {
     success: successbookReview,
   } = bookReviewCreate;
 
+  console.log({book})
+
 
   const showRecommendationsAfterDelay = () => {
     setTimeout(() => {
@@ -98,7 +100,7 @@ function BookScreen() {
           <Row>
             <Col md={4}>
               <Image
-                src={`http://127.0.0.1:8000/${book.image}`}
+                src={`http://127.0.0.1:8000${book.image}`}
                 alt={book.name}
                 style={{
                   width: "300px",
@@ -189,7 +191,7 @@ function BookScreen() {
                     <Image
                       roundedCircle
                       style={{ width: "30px", height: "30px" }}
-                      src={`http://127.0.0.1:8000/${review.user.profile.profile_image}`}
+                      src={`http://127.0.0.1:8000${review.user.profile.profile_image}`}
                     />
                     <strong style={{ color: "blue", marginLeft: "3px" }}>
                       @{review.user.profile.username}
@@ -260,7 +262,8 @@ function BookScreen() {
             </Col>
 
             {/* for Recommendation books        */}
-            <Col md={8}> 
+
+            {/* <Col md={8}> 
               {showRecommendations && (
             <>
               <h4>Books on Same Category</h4>
@@ -280,7 +283,7 @@ function BookScreen() {
               </Row>
           </>
                    )}
-            </Col>
+            </Col> */}
           </Row>
 
         </div>

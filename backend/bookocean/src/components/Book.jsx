@@ -37,10 +37,10 @@ function Book({ book }) {
           ""
         )}
       </div>
-      {/* <Link to={`/book/${slugify(book.name)}`} style={{ textDecoration: "none" }}> */}
+      
       <Link to={`/book/${book._id}`} style={{ textDecoration: "none" }}>
         <Card.Img
-          src={`http://127.0.0.1:8000/${book.image}`}
+          src={`http://127.0.0.1:8000${book.image}`}
           style={{
             width: "200px",
             height: "270px",

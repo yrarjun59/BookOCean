@@ -5,7 +5,6 @@ import LoginScreen from "./screens/LoginScreen";
 import BookScreen from "./screens/BookScreen";
 import CartScreen from "./screens/CartScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import OkScreen from "./screens/okScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import UserProfileEditScreen from "./screens/UserProfileEditScreen";
 import UserListScreen from "./screens/admin/UserListScreen";
@@ -27,7 +26,6 @@ import "react-toastify/dist/ReactToastify.css";
 import MyBookRequest from "./screens/MyBookRequest";
 import RequestsListScreen from "./screens/admin/RequestsListScreen";
 import { ToastContainer, toast } from "react-toastify";
-import AdminDashboard from "./screens/admin/AdminDashBoard";
 
 
 function App() {

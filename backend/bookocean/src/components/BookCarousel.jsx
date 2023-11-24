@@ -6,6 +6,8 @@ import Loader from "./Loader";
 import Message from "./Message";
 import { listTopBooks } from "../actions/bookActions";
 import "../assets/css/Carousel.css"
+import Rating from "./Rating";
+
 
 function BookCarousel() {
   const dispatch = useDispatch();
@@ -47,7 +49,7 @@ function BookCarousel() {
             <Row>
               <Col md={3} style={{marginLeft:"30px"}}>
                   <Image
-                    src={`http://127.0.0.1:8000/${book.image}`}
+                    src={`http://127.0.0.1:8000${book.image}`}
                     className="carousel-image"
                     alt={book.name}
                   />
@@ -62,21 +64,29 @@ function BookCarousel() {
                 <div className="carousel-item-content">
                   <h4 className="carousel-header">{book.name}</h4>
 
-                  <p>{book.description}</p>
+                  <p className="book-description">{book.description}</p>
                   <p className="price-text">Rs {book.price}</p>
+
+                  {/* Direct Buy for Later */}
                   {/* <div>
                     <Button variant="warning">Buy</Button>
                     <Link to={`/book/${book._id}`} className="btn btn-primary">
                       View Details
                     </Link>
                   </div> */}
+
                 </div>
                 </Link>
               </Col>
 
               <Col md={2} style={{ marginTop: "50px" }}>
-                {book.rating} Rating ⭐⭐⭐⭐
+              <Rating
+            value={book.rating}
+            text={`${book.rating}(${book.numReviews})`}
+            color={"#FFDD07"}
+          />
               </Col>
+
             </Row>
             </Link>
           </div>

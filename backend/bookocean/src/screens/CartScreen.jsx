@@ -62,7 +62,7 @@ function CartScreen() {
                   <Row>
                     <Col md={2}>
                       <Image
-                        src={`http://127.0.0.1:8000/${item.image}`}
+                        src={`http://127.0.0.1:8000${item.image}`}
                         fluid
                         rounded
                         style={{
