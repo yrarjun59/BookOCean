@@ -23,9 +23,11 @@ import Loader from "./components/Loader";
 import BookRequestScreen from "./screens/BookRequestScreen";
 import MyBookScreen from "./screens/MyBookScreen";
 import "react-toastify/dist/ReactToastify.css";
+import './index.css';
 import MyBookRequest from "./screens/MyBookRequest";
 import RequestsListScreen from "./screens/admin/RequestsListScreen";
 import { ToastContainer, toast } from "react-toastify";
+import './index.css';
 
 
 function App() {
@@ -43,8 +45,8 @@ function App() {
           <Route exact path="/cart/:id?" element={<CartScreen />} />
 
           <Route exact path="/shipping" element={<ShippingScreen />} />
-          <Route exact path="/payment" element={<PaymentScreen />} />
           <Route exact path="/placeorder" element={<PlaceOrderScreen />} />
+          <Route exact path="/order/:id/pay" element={<PaymentScreen />} />
           <Route exact path="/order/:id" element={<OrderScreen />} />
           <Route exact path="/profile" element={<ProfileScreen />} />
           <Route exact path="/my-orders" element={<MyOrderScreen />} />

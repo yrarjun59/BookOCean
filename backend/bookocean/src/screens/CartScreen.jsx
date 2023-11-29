@@ -57,7 +57,7 @@ function CartScreen() {
                 <ListGroup.Item
                   key={item.bookId}
                   className="my-3"
-                  style={{ boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2);" }}
+                  style={{ boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)" }}
                 >
                   <Row>
                     <Col md={2}>

@@ -30,12 +30,8 @@ function PlaceOrderScreen() {
 
   useEffect(()=>{
     if(success){
-      navigate(`/order/${order._id}`)
+      navigate(`/order/${order._id}/pay`)
       dispatch({type: ORDER_CREATE_RESET})
-    }
-    
-    if(!cart.paymentMethod){
-      navigate('/payment')
     }
     
     if(!cart.shippingAddress){
@@ -48,7 +44,7 @@ function PlaceOrderScreen() {
       createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
-        paymentMethod: cart.paymentMethod,
+        // paymentMethod: cart.paymentMethod,
         itemsPrice: cart.itemsPrice,
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,
@@ -58,7 +54,7 @@ function PlaceOrderScreen() {
   };
 
   return (
-    <div style={{ marginLeft: "100px", marginRight: "100px" }}>
+    <div style={{ marginLeft: "100px", marginRight: "100px", height:"500px" }}>
       {cart.cartItems.length === 0 ? (
         <Link to="/">
           <h2>Please Order Items</h2>
@@ -66,7 +62,7 @@ function PlaceOrderScreen() {
       ) : (
         <>
           <Row>
-            <CheckoutSteps step1 step2 step3 step4 />
+            <CheckoutSteps step1 step2 step3 />
             <Col md={7}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
@@ -79,12 +75,12 @@ function PlaceOrderScreen() {
                   </p>
                 </ListGroup.Item>
 
-                <ListGroup.Item>
+                {/* <ListGroup.Item>
                   <h2>Payment Method</h2>
                   <p style={{ textTransform: "capitalize" }}>
                     Method: {cart.paymentMethod}
                   </p>
-                </ListGroup.Item>
+                </ListGroup.Item> */}
 
                 <ListGroup.Item>
                   <Button

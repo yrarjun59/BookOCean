@@ -30,7 +30,7 @@ def addOrderItems(request):
 
         order = Order.objects.create(
             user=user,
-            paymentMethod=data["paymentMethod"],
+            # paymentMethod=data["paymentMethod"],
             taxPrice=data["taxPrice"],
             shippingPrice=data["shippingPrice"],
             totalPrice=data["totalPrice"],

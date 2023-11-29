@@ -340,22 +340,17 @@ h3 {
 }
 
 .payment-icon {
+  margin: 0;
   width: 150px;
-  height: 150px;
   object-fit: contain;
   cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
-.payment-icon-cash {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  cursor: pointer;
-  margin-bottom: 30px;
-}
 
-.btn-order-place,
-.btn-order-place:hover {
+
+.btn-order-place {
   background-color: var(--primary-color);
   color: white;
 }

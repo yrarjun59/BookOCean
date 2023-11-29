@@ -76,6 +76,8 @@ function OrderScreen() {
       setKhaltiDone(true);    
   };
   
+
+
   const markAsdeliverHandler = () => {
     dispatch(markOrderAsdelivered(order))
     console.log("order successfully delivered");
@@ -94,9 +96,9 @@ function OrderScreen() {
           <Col md={6}>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h2>Payment Method</h2>
+                <h2>Payment Status</h2>
                 <p>
-                  <strong>Method: </strong>
+                  {/* <strong>Payment : </strong> */}
                   {order.paymentMethod}
                 </p>
                 {order.isPaid ? (
@@ -217,7 +219,6 @@ function OrderScreen() {
                       <Button
                         className="btn-paid"
                         amount={order.totalPrice}
-                        onClick={successPaymentHandler}
                       >
                         Pay with Khalti
                       </Button>

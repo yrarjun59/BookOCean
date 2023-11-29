@@ -19,23 +19,25 @@ function PaymentScreen() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(savePaymentMethod(paymentMethod));
-    navigate("/placeorder");
+    // dispatch(savePaymentMethod(paymentMethod));
+    // navigate("/");
+    alert("Successfully ")
   };
 
   useEffect(() => {
+  
     if (!shippingAddress.address) {
-      navigate("/shipping");
+      navigate("/myorders");
     }
   }, [navigate, shippingAddress]);
 
   return (
-    <FormContainer>
-      <CheckoutSteps step1 step2 step3 />
+    <FormContainer style={{height:"200px"}}>
+      <CheckoutSteps step1 step2 step3 step4 />
 
     <Form onSubmit={submitHandler}>
-    <Form.Group>
-        <Form.Label as='legend'>Payment Methods</Form.Label>
+    <Form.Group >
+        <Form.Label style={{marginTop:"20px", marginLeft:"10px"}} as='legend'>Payment Options</Form.Label>
         <Col>
 
          <Button
@@ -44,10 +46,11 @@ function PaymentScreen() {
             background: 'transparent',
             border: 'none',
             padding: 0,
-            margin: 0,
+            marginTop:"5px",
+            marginLeft:"2px",
             cursor: 'pointer'
           }}
-        >
+        > 
           <Image className="payment-icon" src="./khalti.svg" alt="Khalti Image" />
         </Button>
 
