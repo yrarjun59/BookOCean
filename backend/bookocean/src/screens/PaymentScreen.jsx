@@ -6,7 +6,6 @@ import FormContainer from "../components/FormContainer";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { savePaymentMethod } from "../actions/cartActions";
 import { useNavigate } from "react-router-dom";
-import KhaltiPayment from "../payment-gateway/khalti/KhaltiPayment";
 
 function PaymentScreen() {
   const cart = useSelector((state) => state.cart);
@@ -19,9 +18,8 @@ function PaymentScreen() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // dispatch(savePaymentMethod(paymentMethod));
-    // navigate("/");
-    alert("Successfully ")
+    dispatch(savePaymentMethod(paymentMethod));
+    navigate("/place-order");
   };
 
   useEffect(() => {
@@ -33,7 +31,7 @@ function PaymentScreen() {
 
   return (
     <FormContainer style={{height:"200px"}}>
-      <CheckoutSteps step1 step2 step3 step4 />
+      <CheckoutSteps step1 step2 step3  />
 
     <Form onSubmit={submitHandler}>
     <Form.Group >

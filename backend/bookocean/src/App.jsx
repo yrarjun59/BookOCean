@@ -45,8 +45,8 @@ function App() {
           <Route exact path="/cart/:id?" element={<CartScreen />} />
 
           <Route exact path="/shipping" element={<ShippingScreen />} />
-          <Route exact path="/placeorder" element={<PlaceOrderScreen />} />
-          <Route exact path="/order/:id/pay" element={<PaymentScreen />} />
+          <Route exact path="/place-order" element={<PlaceOrderScreen />} />
+          <Route exact path="/select-payment" element={<PaymentScreen />} />
           <Route exact path="/order/:id" element={<OrderScreen />} />
           <Route exact path="/profile" element={<ProfileScreen />} />
           <Route exact path="/my-orders" element={<MyOrderScreen />} />

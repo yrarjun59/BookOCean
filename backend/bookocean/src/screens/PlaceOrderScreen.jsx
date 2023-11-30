@@ -30,8 +30,11 @@ function PlaceOrderScreen() {
 
   useEffect(()=>{
     if(success){
-      navigate(`/order/${order._id}/pay`)
       dispatch({type: ORDER_CREATE_RESET})
+      navigate(`/order/${order._id}/`)
+    }
+    if (!cart.paymentMethod){
+      navigate('/select-payment')
     }
     
     if(!cart.shippingAddress){
@@ -44,7 +47,7 @@ function PlaceOrderScreen() {
       createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
-        // paymentMethod: cart.paymentMethod,
+        paymentMethod: cart.paymentMethod,
         itemsPrice: cart.itemsPrice,
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,
@@ -62,7 +65,7 @@ function PlaceOrderScreen() {
       ) : (
         <>
           <Row>
-            <CheckoutSteps step1 step2 step3 />
+            <CheckoutSteps step1 step2 step3 step4/>
             <Col md={7}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
@@ -75,12 +78,12 @@ function PlaceOrderScreen() {
                   </p>
                 </ListGroup.Item>
 
-                {/* <ListGroup.Item>
+                <ListGroup.Item>
                   <h2>Payment Method</h2>
                   <p style={{ textTransform: "capitalize" }}>
                     Method: {cart.paymentMethod}
                   </p>
-                </ListGroup.Item> */}
+                </ListGroup.Item>
 
                 <ListGroup.Item>
                   <Button

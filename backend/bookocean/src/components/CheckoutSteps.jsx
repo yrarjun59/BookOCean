@@ -24,17 +24,17 @@ function CheckoutSteps({ step1, step2, step3, step4 }) {
 
 
         <Nav.Item className="checkout-steps">
-          <LinkContainer to="/placeorder">
+          <LinkContainer to="/select-payment">
             <Nav.Link disabled={!step3}>
-              <span className={`checkout-step ${step3 ? "current-active-link" : ""}`}>Place Order</span>
+              <span className={`checkout-step ${step3 ? "current-active-link" : ""}`}>Payment</span>
             </Nav.Link>
           </LinkContainer>
         </Nav.Item>
 
         <Nav.Item className="checkout-steps">
-          <LinkContainer to="/pay">
+          <LinkContainer to="/place-order">
             <Nav.Link disabled={!step4}>
-              <span className={`checkout-step ${step4 ? "current-active-link" : ""}`}>Payment</span>
+              <span className={`checkout-step ${step4 ? "current-active-link" : ""}`}>Place Order</span>
             </Nav.Link>
           </LinkContainer>
         </Nav.Item>
