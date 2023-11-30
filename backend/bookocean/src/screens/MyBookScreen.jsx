@@ -75,7 +75,7 @@ function MyBookScreen() {
                                 height: "60px",
                                 objectFit: "contain",
                               }}
-                              src={`http://127.0.0.1:8000/${book.image}`}
+                              src={`http://127.0.0.1:8000${book.image}`}
                             />
                           </Link>
                         </td>
