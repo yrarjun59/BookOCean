@@ -1,19 +1,25 @@
 import axios from "axios";
+import khaltiConfig from "./khaltiConfig";
+import PaymentScreen from "./PaymentScreen";
+
+
+const key = khaltiConfig.key
+const url = khaltiConfig.url;
 
 const KhaltiPayment = async (id,totalAmount,product_name) => {
-    const key = '2d7a2097f38449c281d034f0b54911c5';
-    const url = "https://a.khalti.com/api/v2/epayment/initiate/";
 
     const payload = {
       return_url: `http://localhost:5173/#/order/${id}`,
       website_url: "http://localhost:5173/",
       amount: totalAmount * 100, 
-      purchase_order_id: id, 
-      purchase_order_name: product_name,
+    //   purchase_order_id: id, 
+      purchase_order_id: 2, 
+    //   purchase_order_name: product_name,
+      purchase_order_name: "my_order",
       customer_info: {
         "name": 'user_name',
         "email": "user_name@gmail.com",
-        "phone": "9811496763",
+        "phone":9840320008,
         "address": "Address 3 Main Street"
     },
   };
@@ -26,19 +32,10 @@ const KhaltiPayment = async (id,totalAmount,product_name) => {
     };
 
     try {
-        const response = await axios.post(url, payload, config);
-
-        console.log("Response  is" , response)
-
-        if (response.status === 200) {
-            const data = response.data;
-            console.log({data});       
-
-            window.location.href = data.payment_url
+        const {response} = await axios.post(url, payload, config);
         
-        } else {
-            console.error('Error:', response.statusText);
-        }
+        console.log(response)
+
     } catch (error) {
         console.error(error);
     }
@@ -46,3 +43,6 @@ const KhaltiPayment = async (id,totalAmount,product_name) => {
 };
 
 export default KhaltiPayment;
+
+
+// Properly Handled Error which is comming while requesting the server

@@ -7,7 +7,7 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { savePaymentMethod } from "../actions/cartActions";
 import { useNavigate } from "react-router-dom";
 
-function PaymentScreen() {
+function SelectPaymentScreen() {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
@@ -59,4 +59,4 @@ function PaymentScreen() {
   );
 }
 
-export default PaymentScreen;
+export default SelectPaymentScreen;

@@ -22,8 +22,10 @@ import {
   ORDER_DELIVER_RESET,
 } from "../constants/orderConstants";
 import formateDate from "../assets/js/formateDate";
-import KhaltiPayment from "../payment-gateway/khalti/KhaltiPayment";
 import { toast } from "react-toastify";
+import { payment } from "../payment-gateway/paymentActions";
+import KhaltiPayment from "../payment-gateway/KhaltiPayment";
+
 
 
 function OrderScreen() {
@@ -35,22 +37,17 @@ function OrderScreen() {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const {name:user_name1} = {userInfo}
+
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, error, loading} = orderDetails;
 
-  
-
-  // const orderItems = order.orderItems;
-  // console.log(orderItems)
-  // const product_name = order.orderItems && order.orderItems.length > 0 ? order.orderItems[0].name : "";
-
-  const product_name = "book"
-  const user_name = "user"
 
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
+
+  // const pay = useSelector((state) => state.pay)
+  // const {loading:loadingPay,sucess:successPay, error:errorPay} = pay;
 
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
@@ -61,6 +58,7 @@ function OrderScreen() {
       .toFixed(2);
   }
 
+
   useEffect(() => {
     if (!order || order._id !== Number(orderId) || successDeliver) {
       dispatch({ type: ORDER_DELIVER_RESET });
@@ -70,19 +68,46 @@ function OrderScreen() {
   }, [dispatch, order, orderId, successDeliver]);
 
 
-  const successPaymentHandler = async () => {
-    dispatch(payOrder(orderId));
-    await KhaltiPayment(orderId, order.totalPrice,product_name);  
-      setKhaltiDone(true);    
-  };
+const makePayment = () => {
+    const userName = order.user.profile.name
+    const userEmail = order.user.email
+    const totalAmount = order.totalPrice
+    const address = order.shippingAddress.address
+    const city = order.shippingAddress.city
+    const postal = order.shippingAddress.postalCode
+    const location = [address, city, postal]
+    const shippingAdress = location.join('-')
+    const names = order.orderItems.map(order=>order.name)
+    const productName = names.join('+')
+
+    const userDetails = {
+      'name':userName,
+      'email':userEmail,
+      'address':shippingAdress,
+    }
+
+    const productDetails = {
+      'totalAmount':totalAmount,
+      'orderId':order.orderId,
+      'productName':productName,
+    }
+
+    dispatch(payment(userDetails, productDetails))
+    // await KhaltiPayment(userDetails, productDetails)
   
+};  
+  
+const successPayment = () => {
+  const names = order.orderItems.map(order=>order.name)
+  const productName = names.join('+')
+  KhaltiPayment(orderId, order.totalPrice,"My Product");
+}
 
-
-  const markAsdeliverHandler = () => {
-    dispatch(markOrderAsdelivered(order))
-    console.log("order successfully delivered");
-    alert("order");
-  };
+const markAsdeliverHandler = () => {
+  dispatch(markOrderAsdelivered(order))
+  console.log("order successfully delivered");
+  alert("order");
+};
 
   return loading ? (
     <SpinLoader />
@@ -98,7 +123,7 @@ function OrderScreen() {
               <ListGroup.Item>
                 <h2>Payment Status</h2>
                 <p>
-                  {/* <strong>Payment : </strong> */}
+                  <strong>Payment Option: </strong>
                   {order.paymentMethod}
                 </p>
                 {order.isPaid ? (
@@ -218,8 +243,12 @@ function OrderScreen() {
                     {loadingPay && <SpinLoader />}
                       <Button
                         className="btn-paid"
-                        amount={order.totalPrice}
+                        onClick={successPayment}
                       >
+                      {/* <Button
+                        className="btn-paid"
+                        onClick={makePayment}
+                      > */}
                         Pay with Khalti
                       </Button>
                   </ListGroup.Item>
