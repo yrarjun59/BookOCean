@@ -12,8 +12,6 @@ export const PAYMENT_ERROR = 'PAYMENT_ERROR';
 // const url = khaltiConfig.url;
 
 
-
-
 // ACTIONS
 export const payment = (userDetails, productDetails) => async (dispatch) => {
   const mykey = 'be2939d9222c44d5b6175d0cfbe4ac97';

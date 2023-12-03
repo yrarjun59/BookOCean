@@ -8,7 +8,7 @@ import {
   Card,
   ListGroupItem,
 } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import SpinLoader from "../components/SpinLoader";
@@ -25,11 +25,17 @@ import formateDate from "../assets/js/formateDate";
 import { toast } from "react-toastify";
 import { payment } from "../payment-gateway/paymentActions";
 import KhaltiPayment from "../payment-gateway/KhaltiPayment";
-
+import Payment from "../payment-gateway/Payment";
 
 
 function OrderScreen() {
   const { id: orderId } = useParams();
+  const location = useLocation()
+
+  const searchParams = new URLSearchParams(location.search);
+  const status = searchParams.get('status');
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,9 +52,7 @@ function OrderScreen() {
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
 
-  // const pay = useSelector((state) => state.pay)
-  // const {loading:loadingPay,sucess:successPay, error:errorPay} = pay;
-
+ 
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
@@ -58,14 +62,22 @@ function OrderScreen() {
       .toFixed(2);
   }
 
+  const markOrderAsPaid = () => {
+    if (status!==null && status.toLowerCase()=="completed"){
+      console.log(status)
+      dispatch(payOrder(orderId,status))  
+    }
+  }
+
+    
 
   useEffect(() => {
     if (!order || order._id !== Number(orderId) || successDeliver) {
       dispatch({ type: ORDER_DELIVER_RESET });
-
       dispatch(getOrderDetails(orderId));
+      markOrderAsPaid()
     }
-  }, [dispatch, order, orderId, successDeliver]);
+  }, [dispatch, order, orderId, successDeliver,status]);
 
 
 const makePayment = () => {
@@ -97,11 +109,13 @@ const makePayment = () => {
   
 };  
   
-const successPayment = () => {
+const successPayment = async () => {
   const names = order.orderItems.map(order=>order.name)
   const productName = names.join('+')
-  KhaltiPayment(orderId, order.totalPrice,"My Product");
+  await Payment(orderId, order.totalPrice,"My Product");
 }
+
+
 
 const markAsdeliverHandler = () => {
   dispatch(markOrderAsdelivered(order))
@@ -245,10 +259,6 @@ const markAsdeliverHandler = () => {
                         className="btn-paid"
                         onClick={successPayment}
                       >
-                      {/* <Button
-                        className="btn-paid"
-                        onClick={makePayment}
-                      > */}
                         Pay with Khalti
                       </Button>
                   </ListGroup.Item>
@@ -283,7 +293,5 @@ const markAsdeliverHandler = () => {
     
   );
 }
-
-
 
 export default OrderScreen;

@@ -48,7 +48,8 @@ function App() {
           <Route exact path="/shipping" element={<ShippingScreen />} />
           <Route exact path="/place-order" element={<PlaceOrderScreen />} />
           <Route exact path="/select-payment" element={<SelectPaymentScreen />} />
-          <Route exact path="/payment" element={<PaymentScreen />} />
+          <Route exact path="/order/:id/pay/" element={<PaymentScreen />} />
+          {/* <Route exact path="/payment/" element={<PaymentScreen />} /> */}
           <Route exact path="/order/:id" element={<OrderScreen />} />
           <Route exact path="/profile" element={<ProfileScreen />} />
           <Route exact path="/my-orders" element={<MyOrderScreen />} />
