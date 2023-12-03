@@ -7,23 +7,38 @@ const key = khaltiConfig.key;
 const url = khaltiConfig.url;
 
 
-const  Payment  = async (id, totalAmount, product_name) => {
+const  Payment  = async (userDetails, productDetails) => {
   
     //  initiate payment
+        // const payload = {
+        //   return_url: `http://localhost:5173/#/order/${id}`,
+        //   website_url: 'http://localhost:5173/',
+        //   // amount: totalAmount * 100, 
+        //   amount: 100 * 100, 
+        //   purchase_order_id: 2,
+        //   purchase_order_name: 'my_order',
+        //   customer_info: {
+        //     name: 'user_name',
+        //     email: 'user_name@gmail.com',
+        //     phone: 9840320008,
+        //     address: 'Address 3 Main Street',
+        //   },
+        // };
+
         const payload = {
-          return_url: `http://localhost:5173/#/order/${id}`,
-          website_url: 'http://localhost:5173/',
-          // amount: totalAmount * 100, 
-          amount: 100 * 100, 
-          purchase_order_id: 2,
-          purchase_order_name: 'my_order',
-          customer_info: {
-            name: 'user_name',
-            email: 'user_name@gmail.com',
-            phone: 9840320008,
-            address: 'Address 3 Main Street',
-          },
-        };
+            return_url: `http://localhost:5173/#/order/${productDetails.orderId}`,
+            website_url: "http://localhost:5173/",
+            amount: productDetails.totalAmount * 100,
+            purchase_order_id: productDetails.orderId,
+            purchase_order_name: productDetails.productName,
+            customer_info: {
+              "name": userDetails.name,
+              "email": userDetails.email,
+              "phone":'9840320008',
+              "address": userDetails.address,
+            },
+          };
+
       
         const config = {
           headers: {
@@ -37,8 +52,9 @@ const  Payment  = async (id, totalAmount, product_name) => {
           const { pidx, payment_url } = data
           window.location.href = payment_url;
         } catch (error) {
-          console.log(error.message)
-          console.throw(error.message)
+            // error_message = error.message
+            // console.log({error_message})
+            console.log(error)
         }
        
 }

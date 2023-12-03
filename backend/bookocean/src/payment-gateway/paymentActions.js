@@ -28,7 +28,7 @@ export const payment = (userDetails, productDetails) => async (dispatch) => {
       customer_info: {
         "name": userDetails.name,
         "email": userDetails.email,
-        "phone":'12354678564',
+        "phone":'9840320008',
         "address": userDetails.address,
       },
     };

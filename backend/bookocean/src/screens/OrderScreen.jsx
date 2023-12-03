@@ -56,31 +56,20 @@ function OrderScreen() {
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
-  if (!loading && !error) {
-    order.itemsPrice = order.orderItems
-      .reduce((acc, item) => acc + item.price * item.qty, 0)
-      .toFixed(2);
-  }
+if (!loading && !error) {
+  order.itemsPrice = order.orderItems
+  .reduce((acc, item) => acc + item.price * item.qty, 0)
+  .toFixed(2);
+}
 
-  const markOrderAsPaid = () => {
-    if (status!==null && status.toLowerCase()=="completed"){
-      console.log(status)
+const markOrderAsPaid = () => {
+  if (status!==null && status.toLowerCase()=="completed"){
+    console.log(status)
       dispatch(payOrder(orderId,status))  
     }
-  }
+}
 
-    
-
-  useEffect(() => {
-    if (!order || order._id !== Number(orderId) || successDeliver) {
-      dispatch({ type: ORDER_DELIVER_RESET });
-      dispatch(getOrderDetails(orderId));
-      markOrderAsPaid()
-    }
-  }, [dispatch, order, orderId, successDeliver,status]);
-
-
-const makePayment = () => {
+const makePayment = async () => {
     const userName = order.user.profile.name
     const userEmail = order.user.email
     const totalAmount = order.totalPrice
@@ -100,28 +89,28 @@ const makePayment = () => {
 
     const productDetails = {
       'totalAmount':totalAmount,
-      'orderId':order.orderId,
+      'orderId':orderId,
       'productName':productName,
     }
 
-    dispatch(payment(userDetails, productDetails))
-    // await KhaltiPayment(userDetails, productDetails)
+    await Payment(userDetails, productDetails)
   
 };  
   
-const successPayment = async () => {
-  const names = order.orderItems.map(order=>order.name)
-  const productName = names.join('+')
-  await Payment(orderId, order.totalPrice,"My Product");
-}
-
-
-
 const markAsdeliverHandler = () => {
   dispatch(markOrderAsdelivered(order))
   console.log("order successfully delivered");
-  alert("order");
 };
+
+
+useEffect(() => {
+  if (!order || order._id !== Number(orderId) || successDeliver) {
+    dispatch({ type: ORDER_DELIVER_RESET });
+    dispatch(getOrderDetails(orderId));
+    markOrderAsPaid()
+  }
+}, [dispatch, order, orderId, successDeliver,status]);
+
 
   return loading ? (
     <SpinLoader />
@@ -257,7 +246,7 @@ const markAsdeliverHandler = () => {
                     {loadingPay && <SpinLoader />}
                       <Button
                         className="btn-paid"
-                        onClick={successPayment}
+                        onClick={makePayment}
                       >
                         Pay with Khalti
                       </Button>
