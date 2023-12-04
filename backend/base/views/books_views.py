@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
@@ -61,46 +62,18 @@ def getBook(request, pk):
     allBooks = Book.objects.all()
 
     # Create a pandas DataFrame with book data
-    # book_data = pd.DataFrame(list(allBooks.values()))
+    book_data = pd.DataFrame(list(allBooks.values()))
+    print(book_data)
 
-    # # Select features for collaborative filtering (e.g., 'category', 'author', 'rating', etc.)
-    # selected_features = ['_id','category_id', 'author_id', 'rating']
+    oks = book_data.head()
+    print(oks)
+    # print(oks['category'])
 
-    # # Create a subset of the DataFrame with selected features
-    # book_data_subset = book_data[selected_features]
-    # print(book_data_subset)
-
-    # # Calculate cosine similarity between books based on the selected features
-    # similarity_matrix = cosine_similarity(book_data_subset)
-
-    # # book_indices = book_data[book_data['_id'] == pk].index
-    # book_indices = book_data[book_data['_id']==int(pk)].index
-
-    # if not book_indices.empty:
-    #     book_index = book_indices[0]
-    # else:
-    #     return Response({"error": "Book not found in DataFrame"}, status=status.HTTP_404_NOT_FOUND)
-
-
-
-    # Get the similarity scores for the current book
-
-    # similar_books_indices = similarity_matrix[book_index]
-    # print("similar_books_indices",similar_books_indices)
-
-    # Sort the books based on similarity scores
-    # recommended_books_indices = similar_books_indices.argsort()[::-1]
-    # print(recommended_books_indices)
-
-    # Extract book details for the recommended books
-    # recommended_books = allBooks.filter(_id__in=book_data['_id'].iloc[recommended_books_indices])
-    # print(recommended_books)
-    # recommendedSerializer = BookSerializer(recommended_books,many=True)
-
+    # c = book_data['category'].head()
+    # print(c)
 
     recommended_books = Book.objects.filter(category=book.category).exclude(_id=book._id)
     recommendedSerializer = BookSerializer(recommended_books,many=True)
-
 
     serializer = BookSerializer(book, many=False)
     
@@ -110,6 +83,7 @@ def getBook(request, pk):
         "recommended_books":recommendedSerializer.data
     })
     
+
 
 @api_view(["GET"])
 def getTopBooks(request):

@@ -61,8 +61,10 @@ def addOrderItems(request):
             )
 
             # (4) Update stock
-
             book.countInStock -= item.qty
+
+            # 5 update soldCount
+            book.soldCount += item.qty
             book.save()
 
         serializer = OrderSerializer(order, many=False)
