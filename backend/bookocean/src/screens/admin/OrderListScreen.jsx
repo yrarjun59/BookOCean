@@ -8,7 +8,6 @@ import { listOrders } from "../../actions/orderActions";
 import { useNavigate } from "react-router-dom";
 import Paginate from "../../components/Paginate";
 import formateDate from "../../assets/js/formateDate";
-import spinLoader from "../../components/spinLoader";
 import Paginat from "../../components/Paginat";
 
 
