@@ -23,8 +23,6 @@ import {
 } from "../constants/orderConstants";
 import formateDate from "../assets/js/formateDate";
 import { toast } from "react-toastify";
-import { payment } from "../payment-gateway/paymentActions";
-import KhaltiPayment from "../payment-gateway/KhaltiPayment";
 import Payment from "../payment-gateway/Payment";
 
 
@@ -63,9 +61,9 @@ if (!loading && !error) {
 }
 
 const markOrderAsPaid = () => {
-  if (status!==null && status.toLowerCase()=="completed"){
-    console.log(status)
+  if (status!==null && status.toLowerCase()==="completed"){
       dispatch(payOrder(orderId,status))  
+      navigate(`/order/${orderId}`)
     }
 }
 

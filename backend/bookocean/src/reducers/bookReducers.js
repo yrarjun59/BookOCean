@@ -75,7 +75,9 @@ export const myBookListReducer = (state = { books: [] }, action) => {
     case MY_BOOK_SUCCESS:
       return {
         loading: false,
-        books: action.payload,
+        books: action.payload.books,
+        page:action.payload.page,
+        pages:action.payload.pages,
       };
 
     case MY_BOOK_FAIL:
@@ -92,7 +94,11 @@ export const bookRequestReducer = (state = {}, action) => {
       return { loading: true };
 
     case BOOK_REQUEST_SUCCESS:
-      return { loading: false, success: true, book: action.payload };
+      return { 
+        loading: false, 
+        success: true, 
+        book: action.payload 
+      };
 
     case BOOK_REQUEST_FAIL:
       return { loading: false, error: action.payload };
@@ -111,7 +117,13 @@ export const getAllBookRequestsReducer = (state= {books:[] }, action) => {
       return { loading: true, books: [] };
 
     case BOOK_REQUEST_SUCCESS:
-      return { loading: false, success: true, books: action.payload };
+      return { 
+        loading: false, 
+        success: true, 
+        books: action.payload.books,
+        page:action.payload.page,
+        pages:action.payload.pages, 
+      };
 
     case BOOK_REQUEST_FAIL:
       return { loading: false, error: action.payload };
@@ -130,9 +142,12 @@ export const myRequestBookListReducer = (state = { books: [] }, action) => {
       return { loading: true, books: [] };
 
     case MY_BOOK_SUCCESS:
-      return {
-        loading: false,
-        books: action.payload,
+      return { 
+        loading: false, 
+        success: true, 
+        books: action.payload.books,
+        page:action.payload.page,
+        pages:action.payload.pages, 
       };
 
     case MY_BOOK_FAIL:

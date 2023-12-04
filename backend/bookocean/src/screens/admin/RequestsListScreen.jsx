@@ -6,13 +6,16 @@ import formateDate from "../../assets/js/formateDate";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import { getAllRequestedBooks } from "../../actions/bookActions";
+import Paginate from "../../components/Paginate";
 
 function RequestsListScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const listRequestBooks = useSelector((state) => state.allRequestedBooks);
-  const { loading, error, books } = listRequestBooks;
+  const { books, error, loading, page, pages } = listRequestBooks;
+
+  console.log({books})
   
   useEffect(() => {
       dispatch(getAllRequestedBooks());

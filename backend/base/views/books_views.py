@@ -34,10 +34,8 @@ def getBooks(request):
     books = Book.objects.filter(name__icontains=query).order_by("-createdAt")
 
     page = request.query_params.get("page")
-    paginator = Paginator(books, 8)
-    print("page:", page)
+    paginator = Paginator(books, 4)
     length = len(books)
-    print("length:", length)
 
     try:
         books = paginator.page(page)
@@ -113,7 +111,6 @@ def getBook(request, pk):
     })
     
 
-
 @api_view(["GET"])
 def getTopBooks(request):
     books = Book.objects.filter(rating__gte=4.5).order_by("-rating")[:5]
@@ -145,17 +142,54 @@ def requestBook(request):
 def myRequestBooks(request):
     user = request.user
     books = user.bookrequest_set.all()
-    serializer = BookRequestSerializer(books, many=True)
-    return Response(serializer.data)
 
+    page = request.query_params.get("page")
+    print("page",page)
+    paginator = Paginator(books, 4)
+
+    if page is not None:
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+        except EmptyPage:
+            books = paginator.page(paginator.num_pages)
+    else:
+        page = 1
+
+    page = int(page)
+
+    serializer = BookRequestSerializer(books, many=True)
+    return Response(
+        {"books": serializer.data, "page": page, "pages": paginator.num_pages}
+    )
+        
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def myBooks(request):
     user = request.user
     books = user.book_set.all()
+
+    page = request.query_params.get("page")
+    paginator = Paginator(books, 4)
+
+    if page is not None:
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+        except EmptyPage:
+            books = paginator.page(paginator.num_pages)
+    else:
+        page = 1
+
+    page = int(page)
+
     serializer = BookSerializer(books, many=True)
-    return Response(serializer.data)
+    return Response(
+        {"books": serializer.data, "page": page, "pages": paginator.num_pages}
+    )
 
 
 @api_view(["POST"])
@@ -322,6 +356,25 @@ def getNotifications(request):
 @api_view(["GET"])
 def getBookRequests(request):
     books = BookRequest.objects.all().order_by('-requestAt')
+    page = request.query_params.get("page")
+    paginator = Paginator(books, 4)
+
+    print("page",page)
+
+    if page is not None:
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+        except EmptyPage:
+            books = paginator.page(paginator.num_pages)
+    else:
+        page = 1
+
+    page = int(page)
     serializer = BookRequestSerializer(books, many=True)
-    return Response(serializer.data)
+    
+    return Response(
+                {"books": serializer.data, "page": page, "pages": paginator.num_pages}
+    )
 

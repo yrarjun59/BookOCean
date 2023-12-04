@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import formateDate from "../assets/js/formateDate";
 import { myRequestBooks } from "../actions/bookActions";
+import Paginat from "../components/Paginat";
 
 
 function MyBookScreen() {
@@ -16,7 +17,7 @@ function MyBookScreen() {
   const { userInfo } = userLogin;
 
   const listMyRequestBooks = useSelector((state) => state.requestBooks);
-  const { loading, error, books } = listMyRequestBooks;
+  const { loading, error, books ,pages,page} = listMyRequestBooks;
 
   const bookDelete = useSelector((state) => state.bookDelete);
   const {
@@ -77,6 +78,7 @@ function MyBookScreen() {
                     ))}
                   </tbody>
                 </Table>
+                <Paginat pages={pages} page={page} />
               </div>
             )}
           </Col>

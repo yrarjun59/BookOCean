@@ -14,7 +14,7 @@ SECRET_KEY = "django-insecure-d3_^sn4xq9&vpelbekjj2hnp@9ynehngiq#n@)sz-wp_d+d7o7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost","*"]
+ALLOWED_HOSTS = ["*"]
 
 SITE_ID = 1
 # Application definition
@@ -85,6 +85,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",

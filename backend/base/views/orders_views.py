@@ -74,8 +74,10 @@ def addOrderItems(request):
 def getMyOrders(request):
     user = request.user
     orders = user.order_set.all().order_by('-createdAt')
+    page = request.query_params.get('page')
 
-    page = request.query_params.get("page")
+
+    print("page",page)
     paginator = Paginator(orders, 4)
 
     if page is not None:
@@ -101,7 +103,7 @@ def getOrders(request):
     orders = Order.objects.order_by("-createdAt")
 
     page = request.query_params.get("page")
-    paginator = Paginator(orders, 4)
+    paginator = Paginator(orders, 6)
 
     if page is not None:
         try:

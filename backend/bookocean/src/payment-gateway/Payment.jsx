@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import khaltiConfig from './khaltiConfig';
-import PaymentScreen from './PaymentScreen';
 
 const key = khaltiConfig.key;
 const url = khaltiConfig.url;
@@ -10,25 +9,10 @@ const url = khaltiConfig.url;
 const  Payment  = async (userDetails, productDetails) => {
   
     //  initiate payment
-        // const payload = {
-        //   return_url: `http://localhost:5173/#/order/${id}`,
-        //   website_url: 'http://localhost:5173/',
-        //   // amount: totalAmount * 100, 
-        //   amount: 100 * 100, 
-        //   purchase_order_id: 2,
-        //   purchase_order_name: 'my_order',
-        //   customer_info: {
-        //     name: 'user_name',
-        //     email: 'user_name@gmail.com',
-        //     phone: 9840320008,
-        //     address: 'Address 3 Main Street',
-        //   },
-        // };
-
         const payload = {
             return_url: `http://localhost:5173/#/order/${productDetails.orderId}`,
             website_url: "http://localhost:5173/",
-            amount: productDetails.totalAmount * 100,
+            amount: +productDetails.totalAmount,
             purchase_order_id: productDetails.orderId,
             purchase_order_name: productDetails.productName,
             customer_info: {
@@ -38,7 +22,6 @@ const  Payment  = async (userDetails, productDetails) => {
               "address": userDetails.address,
             },
           };
-
       
         const config = {
           headers: {
@@ -52,9 +35,15 @@ const  Payment  = async (userDetails, productDetails) => {
           const { pidx, payment_url } = data
           window.location.href = payment_url;
         } catch (error) {
-            // error_message = error.message
-            // console.log({error_message})
-            console.log(error)
+          console.log(error)
+
+          // this is not work when cors error occursr
+            // const {response} = error
+            // const data = response.data
+            
+            // const error_field = Object.keys(data)[0]
+            // const {error_key} = data
+            // console.log(`In ${error_field}: ${error_key}`)
         }
        
 }

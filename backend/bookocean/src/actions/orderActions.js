@@ -253,5 +253,5 @@ export const listOrders = () => async (dispatch, getState) => {
             : error.message,
       });
     }
-  };
+};
   

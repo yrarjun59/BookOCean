@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Paginate from "../../components/Paginate";
 import formateDate from "../../assets/js/formateDate";
 import spinLoader from "../../components/spinLoader";
+import Paginat from "../../components/Paginat";
 
 
 function OrderListScreen() {
@@ -86,14 +87,14 @@ function OrderListScreen() {
               ))}
             </tbody>
           </Table>
-          {/* <Paginate
+          <Paginat
             pages={pages}
             page={page}
             isAdmin={true}
-            route="/admin/orderlist"
-          /> */}
+          />
         </div>
       )}
+       
     </div>
   );
 }

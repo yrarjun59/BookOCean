@@ -36,7 +36,6 @@ import {
   orderListReducer,
   orderPayReducer,
 } from "./reducers/orderReducers";
-import { paymentReducer } from "./payment-gateway/paymentActions";
 
 const reducer = combineReducers({
   bookList: bookListReducer,
@@ -71,7 +70,6 @@ const reducer = combineReducers({
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
 
-  pay:paymentReducer,
   orderDeliver: orderDeliverReducer,
 });
 

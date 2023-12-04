@@ -7,6 +7,7 @@ import Loader from "../components/Loader";
 import formateDate from "../assets/js/formateDate";
 import { mybooks } from "../actions/bookActions";
 import BookEditScreen from "./BookEditScreen";
+import Paginat from "../components/Paginat";
 
 function MyBookScreen() {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ function MyBookScreen() {
   const { userInfo } = userLogin;
 
   const listMyBooks = useSelector((state) => state.mybooks);
-  const { loading, error, books } = listMyBooks;
+  const { loading, error, books,page,pages } = listMyBooks;
 
   const bookDelete = useSelector((state) => state.bookDelete);
   const {
@@ -105,6 +106,7 @@ function MyBookScreen() {
                     ))}
                   </tbody>
                 </Table>
+                <Paginat pages={pages} page={page} />
               </div>
             )}
           </Col>
