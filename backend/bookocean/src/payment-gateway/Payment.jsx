@@ -12,7 +12,7 @@ const  Payment  = async (userDetails, productDetails) => {
         const payload = {
             return_url: `http://localhost:5173/#/order/${productDetails.orderId}`,
             website_url: "http://localhost:5173/",
-            amount: +productDetails.totalAmount,
+            amount: productDetails.totalAmount * 100 ,            
             purchase_order_id: productDetails.orderId,
             purchase_order_name: productDetails.productName,
             customer_info: {
@@ -22,6 +22,7 @@ const  Payment  = async (userDetails, productDetails) => {
               "address": userDetails.address,
             },
           };
+
       
         const config = {
           headers: {

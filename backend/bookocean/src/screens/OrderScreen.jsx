@@ -62,15 +62,14 @@ if (!loading && !error) {
 
 const markOrderAsPaid = () => {
   if (status!==null && status.toLowerCase()==="completed"){
-      dispatch(payOrder(orderId,status))  
-      navigate(`/order/${orderId}`)
+      dispatch(payOrder(orderId,status)) && navigate(`/order/${orderId}`)
     }
 }
 
 const makePayment = async () => {
     const userName = order.user.profile.name
     const userEmail = order.user.email
-    const totalAmount = order.totalPrice
+    const totalAmount = +order.totalPrice
     const address = order.shippingAddress.address
     const city = order.shippingAddress.city
     const postal = order.shippingAddress.postalCode
@@ -90,6 +89,7 @@ const makePayment = async () => {
       'orderId':orderId,
       'productName':productName,
     }
+
 
     await Payment(userDetails, productDetails)
   

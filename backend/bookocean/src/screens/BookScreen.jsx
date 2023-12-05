@@ -27,7 +27,6 @@ import SpinLoader from "../components/SpinLoader";
 function BookScreen() {
   const { id: bookId } = useParams();
 
-  console.log("this is the id",bookId)
   const navigate = useNavigate();
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
@@ -50,7 +49,6 @@ function BookScreen() {
     success: successbookReview,
   } = bookReviewCreate;
 
-  console.log({book})
 
 
   const showRecommendationsAfterDelay = () => {
@@ -71,7 +69,6 @@ function BookScreen() {
   }, [dispatch, successbookReview,showRecommendations]);
 
   const addToCartHandler = () => {
-    console.log("cartHandler book passing id", bookId);
     dispatch(addToCart(bookId));
     navigate(`/cart`);
   };
