@@ -57,10 +57,7 @@ function BookCarousel() {
               </Col>
 
               <Col md={6} style={{marginTop:"20px"}}>
-              <Link
-                  to={`/book/${book._id}`}
-                  style={{ textDecoration: "none" }}
-                >
+              <Link to={`/book/${book._id}`} style={{ textDecoration: "none" }}>
                 <div className="carousel-item-content">
                   <h4 className="carousel-header">{book.name}</h4>
 
@@ -76,7 +73,7 @@ function BookCarousel() {
                   </div> */}
 
                 </div>
-                </Link>
+              </Link>
               </Col>
 
               <Col md={2} style={{ marginTop: "50px" }}>

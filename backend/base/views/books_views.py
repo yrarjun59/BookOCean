@@ -13,7 +13,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import os
+import csv
 import pandas as pd
+from ..getRecommendations import getRecommendations
 
 
 from base.serializers import (
@@ -59,31 +62,20 @@ def getBooks(request):
 @api_view(["GET"])
 def getBook(request, pk):
     book = Book.objects.get(_id=pk)
-    allBooks = Book.objects.all()
-
-    # Create a pandas DataFrame with book data
-    book_data = pd.DataFrame(list(allBooks.values()))
-    print(book_data)
-
-    oks = book_data.head()
-    print(oks)
-    # print(oks['category'])
-
-    # c = book_data['category'].head()
-    # print(c)
-
-    recommended_books = Book.objects.filter(category=book.category).exclude(_id=book._id)
-    recommendedSerializer = BookSerializer(recommended_books,many=True)
+    book_name = book.name
+    try:
+        recommended_books = getRecommendations(book_name)
+        recommendedSerializer = BookSerializer(recommended_books,many=True)
+    except Exception as e:
+        print(f"{e} error occured")
+        recommended_books = []
 
     serializer = BookSerializer(book, many=False)
-    
-
     return Response({
         "book":serializer.data,
         "recommended_books":recommendedSerializer.data
     })
     
-
 
 @api_view(["GET"])
 def getTopBooks(request):
@@ -191,8 +183,10 @@ def createBook(request):
             description=data["description"],
             countInStock=data["countInStock"],
         )
-
         serializer = BookSerializer(book, many=False)
+
+        # make a updated csv
+        getCsvOfBooksData()
         return Response(serializer.data)
     except Exception as e:
         message = {"detail": f"Error Occured: {e}"}
@@ -221,6 +215,9 @@ def updateBook(request, pk):
         book.save()
 
         serializer = BookSerializer(book, many=False)
+
+        # make a updated csv
+        getCsvOfBooksData()
         return Response(serializer.data)
     except Exception as e:
         message = {"detail": f"Error Occured: {e}"}
@@ -245,6 +242,8 @@ def uploadImage(request):
 def deleteBook(request, pk):
     book = Book.objects.get(_id=pk)
     book.delete()
+    # make a updated csv
+    getCsvOfBooksData()
     return Response("Book Deleted")
 
 
@@ -351,4 +350,37 @@ def getBookRequests(request):
     return Response(
                 {"books": serializer.data, "page": page, "pages": paginator.num_pages}
     )
+
+
+def getCsvOfBooksData():
+    all_books = Book.objects.all()
+
+    file_path = "base/books_data.csv"
+
+    # Define the field names for the CSV header
+    field_names = ['id', 'name', 'author', 'category', 'numReviews', 'soldCount', 'image', 'description', 'rating', 'price', 'countInStock', 'createdAt']
+
+    # Open the CSV file in write mode and write the header
+    with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=field_names)
+        writer.writeheader()
+
+        # Write each book's data as a row in the CSV file
+        for book in all_books:
+            writer.writerow({
+                'id': book._id,
+                'name': book.name,
+                'author': book.author,
+                'category': book.category,
+                'numReviews': book.numReviews,
+                'soldCount': book.soldCount,
+                'image': book.image.url if book.image else '',  
+                'description': book.description,
+                'rating': book.rating,
+                'price': book.price,
+                'countInStock': book.countInStock,
+                'createdAt': book.createdAt,
+            })
+
+    print(f"Data exported to {file_path}")
 
