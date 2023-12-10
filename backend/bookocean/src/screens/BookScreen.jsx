@@ -66,7 +66,7 @@ function BookScreen() {
 
     dispatch(detailBook(bookId));
     showRecommendationsAfterDelay();
-  }, [dispatch, successbookReview,showRecommendations]);
+  }, [dispatch, successbookReview,showRecommendations,bookId]);
 
   const addToCartHandler = () => {
     dispatch(addToCart(bookId));
@@ -176,7 +176,7 @@ function BookScreen() {
 
           {/* for Reviews */}
           <Row>
-            <Col md={4}>
+            <Col md={6}>
               <h4 style={{ marginLeft: "20px", marginTop: "20px" }}>Reviews</h4>
               {book.reviews.length === 0 && (
                 <Message variant="info">No Reviews</Message>
@@ -259,11 +259,10 @@ function BookScreen() {
             </Col>
 
             {/* for Recommendation books        */}
-
-            {/* <Col md={8}> 
+            <Col md={6}> 
               {showRecommendations && (
             <>
-              <h4>Books on Same Category</h4>
+              <h4 style={{textAlign:"center"}}>Books on Same Category</h4>
               <Row>
                 {recommended_books.length > 0 ? (
                   recommended_books.map((book) => (
@@ -280,7 +279,7 @@ function BookScreen() {
               </Row>
           </>
                    )}
-            </Col> */}
+            </Col>
           </Row>
 
         </div>

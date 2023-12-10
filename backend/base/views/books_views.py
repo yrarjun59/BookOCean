@@ -16,7 +16,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 import os
 import csv
 import pandas as pd
-from ..getRecommendations import getRecommendations
+# from ..getRecommendations import getRecommendations
+from ..getRecomm import getRecommendations
 
 
 from base.serializers import (
@@ -64,7 +65,8 @@ def getBook(request, pk):
     book = Book.objects.get(_id=pk)
     book_name = book.name
     try:
-        recommended_books = getRecommendations(book_name)
+        getRecommBookIds = getRecommendations(book_name)
+        recommended_books = Book.objects.filter(_id__in=getRecommBookIds)
         recommendedSerializer = BookSerializer(recommended_books,many=True)
     except Exception as e:
         print(f"{e} error occured")

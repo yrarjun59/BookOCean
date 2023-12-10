@@ -42,10 +42,9 @@ function RBook({ book }) {
           )}
         </div>
 
-        {/* <Link to={`/book/${book._id}`} style={{ textDecoration: "none" }}> */}
-        <a href={`/#/book/${book._id}`} target="_blank">
+        <Link to={`/book/${book._id}`} style={{ textDecoration: "none" }}>
           <Card.Img
-            src={`http://127.0.0.1:8000/${book.image}`}
+            src={`http://127.0.0.1:8000${book.image}`}
             style={{
               width: "180px",
               height: "250px",
@@ -58,15 +57,20 @@ function RBook({ book }) {
           <Card.Body
             as="div"
             style={{
-              height: "300px",
+              height: "400px",
               width: "200px",
               position: "relative",
-              background: "white",
             }}
           >
+            <p className="book-title" style={{ textAlign: "center" }}>
+            {book.name}
+          </p>
+          <p style={{ color: "red", fontSize: "15px", textAlign: "center" }}>
+            Rs {book.price}
+          </p>
           </Card.Body>
-          </a>
-        {/* </Link> */}
+          {/* </a> */}
+        </Link>
 
       </Card>
     );
