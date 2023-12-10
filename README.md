@@ -1,11 +1,2 @@
-# book_ocean-updated
-
-Ocean-Books
-
-2-> Reset Password
-2-> Book Image Upload while creating
-3-> Pagination
-
-4-> checkoutHandler - Payment Integration
-5-> Guest Handler
-6-> Chat System
+Full Stack Web Application  with khalti payment gateway and content-based filter recommendation algorithm
+A platform for book lovers to buy and sell books
