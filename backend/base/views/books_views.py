@@ -16,7 +16,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 import os
 import csv
 import pandas as pd
-# from ..getRecommendations import getRecommendations
 from ..getRecomm import getRecommendations
 
 

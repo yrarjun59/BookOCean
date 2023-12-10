@@ -28,10 +28,8 @@ def getRecommendations(book_name, top_n=3):
         
         # Calculate similarity between books
         cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
-        
         # Get indices
         similar_books_indices = cosine_sim[book_index].argsort()[::-1][1:top_n + 1]
-        
         # Retrieve recommended books' IDs based on similarity
         recommended_books_id = data.iloc[similar_books_indices]['id'].tolist()
 
